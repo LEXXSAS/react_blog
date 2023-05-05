@@ -1,5 +1,4 @@
 import React from 'react'
-import art from '../img/400-1unsplash.jpg'
 import artTwo from '../img/photo400.jpg'
 
 function About() {

@@ -1,6 +1,5 @@
 import React from 'react'
 import { Button } from 'react-bootstrap';
-import art from '../img/400-1unsplash.jpg'
 import { useParams, useNavigate } from 'react-router-dom';
 import { AppContext } from '../components/context';
 import { Link } from 'react-router-dom';

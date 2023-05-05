@@ -8,7 +8,7 @@ import Fullpost from './pages/Fullpost';
 import Footer from './pages/Footer';
 import Layout from './components/Layout';
 import { AppContext } from './components/context';
-import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
 import Profiletest from './pages/Profiletest';

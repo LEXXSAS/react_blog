@@ -1,6 +1,6 @@
 import React from 'react'
-import {Button, Nav, Navbar} from 'react-bootstrap';
-import { Link, useNavigate } from 'react-router-dom';
+import {Nav, Navbar} from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
 function Header() {
@@ -21,7 +21,7 @@ function Header() {
             <div className='container'>
                 <div className='header'>
                     <Navbar.Brand><Link to='/'><h2>React Blog</h2></Link></Navbar.Brand>
-                    <Nav variant="pills">
+                    <Nav variant="pills" >
                         <Nav.Link active={pathname === '/'} to="/" as={Link}>Главная</Nav.Link>
                         <Nav.Link active={pathname === '/about'} to='/about' as={Link}>Обо мне</Nav.Link>
                         {isAuth ? <Nav.Link active={pathname === '/profile'} to='/profile' as={Link}>Профиль</Nav.Link> : 
