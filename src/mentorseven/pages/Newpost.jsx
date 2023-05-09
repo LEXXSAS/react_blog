@@ -53,13 +53,14 @@ function Newpost() {
         }
 
       useEffect(() => {
-        if (loading) {
-            fetchAPI()
-        }
-        return () => {
-            fetchAPI()
-            setLoading(false)
-        }
+        fetchAPI()
+        // if (loading) {
+        //     fetchAPI()
+        // }
+        // return () => {
+        //     fetchAPI()
+        //     setLoading(false)
+        // }
       }, [])
       
       const recipesCollectionRef = collection(db, 'posts')
