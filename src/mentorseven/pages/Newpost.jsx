@@ -58,6 +58,7 @@ function Newpost() {
         }
         return () => {
             fetchAPI()
+            setLoading(false)
         }
       }, [])
       
