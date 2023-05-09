@@ -10,7 +10,7 @@ const Fullpost = () => {
     // const [redir, setRedir] = React.useState();
     let {id} = useParams();
 
-    const post = posts.find((obj) => obj.id === Number(id));
+    const post = posts.find((obj) => obj.id === (id));
 
     // React.useEffect(() => {
     //   setTimeout(() => {

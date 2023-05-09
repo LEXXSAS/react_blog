@@ -119,6 +119,13 @@ a:hover {
     text-align: center;
 }
 
+.btn-secondary {
+    background-color: #798589;
+}
+.btn-secondary:hover {
+    background-color: #50564c;
+}
+
 /* @media (min-width: 950px) {
     .upclick {
         right: 130px;

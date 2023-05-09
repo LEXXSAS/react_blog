@@ -37,6 +37,7 @@ const Profile = () => {
     signOut(auth).then(() => {
       console.log('вы вышли')
       window.localStorage.removeItem('token');
+      window.localStorage.removeItem('email');
     }).catch(error => console.log(error))
   }
 

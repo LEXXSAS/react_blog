@@ -27,6 +27,7 @@ const Login = () => {
         .then((userCredential) => {
           navigate('/profile')
           window.localStorage.setItem('token', userCredential.user.accessToken);
+          window.localStorage.setItem('email', userCredential.user.email);
         }).catch((error) => {
           console.log(error);
           alert('Ошибка! Неверная почта или пароль')
@@ -63,25 +64,28 @@ const Login = () => {
     }, [])
 
   return (
-    <div className='full-login'>
-    <Form onSubmit={onSubmit} style={{maxWidth: '350px', margin: '0 auto'}} className='container'>
+<>
+      {/* <div style={{height: '50px'}}></div> */}
+      <div className='full-login'>
+      <Form onSubmit={onSubmit} style={{maxWidth: '350px', margin: '0 auto'}} className='container'>
+          <Row>
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Email</Form.Label>
+          <Form.Control onChange={handleChangeInput} name='email' type="email" value={fields.email} placeholder="Введите адрес почты" />
+        </Form.Group>
+        </Row>
         <Row>
-      <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>Email</Form.Label>
-        <Form.Control onChange={handleChangeInput} name='email' type="email" value={fields.email} placeholder="Введите адрес почты" />
-      </Form.Group>
-      </Row>
-      <Row>
-      <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Password</Form.Label>
-        <Form.Control onChange={handleChangeInput} name='password' type="password" value={fields.password} placeholder="Введите пароль" />
-      </Form.Group>
-      </Row>
-      <Button variant="primary" type="submit">
-        Войти
-      </Button>
-    </Form>
-    </div>
+        <Form.Group className="mb-3" controlId="formBasicPassword">
+          <Form.Label>Password</Form.Label>
+          <Form.Control onChange={handleChangeInput} name='password' type="password" value={fields.password} placeholder="Введите пароль" />
+        </Form.Group>
+        </Row>
+        <Button variant="primary" type="submit">
+          Войти
+        </Button>
+      </Form>
+      </div>
+</>
   )
 }
 
