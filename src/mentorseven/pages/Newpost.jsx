@@ -18,7 +18,7 @@ function Newpost() {
     // const [userRequest, setUserRequest] = useState({
     //     loading: false
     // })
-    const [loading, setLoading] = useState(false);
+    // const [loading, setLoading] = useState(false);
 
     const [form, setForm] = useState({
         title: '',
@@ -35,8 +35,8 @@ function Newpost() {
             await axios.get(`https://api.unsplash.com/photos/random/?client_id=${clientIDTwo}`)
             .then(response => {
                 let iUrl = response.data.urls.raw + "&fit=crop&w=460&h=250";
-                setLoading(true)
-                console.log(iUrl)
+                // setLoading(true)
+                // console.log(iUrl)
                 return setForm({
                     title: '',
                     text: '',
@@ -45,7 +45,7 @@ function Newpost() {
             })
             } catch(error) {
                 console.log(error)
-                setLoading(true)
+                // setLoading(true)
                 return setForm({
                     title: '',
                     text: '',
@@ -63,7 +63,7 @@ function Newpost() {
 
 
         // old код без React query
-        
+
         // const fetchAPI = async() => {
         //     try {
         //         await axios.get(`https://api.unsplash.com/photos/random/?client_id=${clientIDTwo}`)
