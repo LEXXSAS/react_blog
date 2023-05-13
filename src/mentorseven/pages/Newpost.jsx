@@ -60,7 +60,9 @@ function Newpost() {
           return console.log('Загрузка данных...')
         }
 
-
+        if (data) {
+          return console.log('Данные загружены')
+        }
 
         // old код без React query
 
