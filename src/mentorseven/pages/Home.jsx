@@ -2,6 +2,7 @@ import React from 'react'
 import {Card, Row, Col, Button} from 'react-bootstrap';
 import { AppContext } from '../components/context';
 import { Link } from 'react-router-dom';
+import useScrollPosition from "../components/useScrollPosition";
 
 export const Home = () => {
 
@@ -17,7 +18,7 @@ export const Home = () => {
         }
     }, [])
 
-
+    useScrollPosition("Home")
 
     return (
         

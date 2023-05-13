@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import {QueryClient, QueryClientProvider, useQuery} from 'react-query'
 // import { Provider } from 'react-redux';
 
 
@@ -29,11 +30,15 @@ import App from './mentorseven/App'
 // import App from './mentrofive-usecontext/App'
 // import App from './tutorial-4-gen-phrases/App'
 
+const queryClient = new QueryClient();
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
+        <QueryClientProvider client={queryClient}>
         <HashRouter>
             <App />
         </HashRouter>
+        </QueryClientProvider>
     </React.StrictMode>
 );
