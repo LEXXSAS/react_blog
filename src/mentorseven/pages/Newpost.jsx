@@ -30,6 +30,8 @@ function Newpost() {
         let clientID = 'rGjzWznfC6EPirpykjLXPmZF_fKj6g-EwJRauPvSV70';
         let clientIDTwo = '9tk8OKr9wnZvXVyodmmfQwvy1O6UzHrIaGKAfnu72Cw';
 
+        const {data,  isLoading, isError } = useQuery('response', fetchAPI )
+
         async function fetchAPI() {
           try {
             await axios.get(`https://api.unsplash.com/photos/random/?client_id=${clientID}`)
@@ -37,16 +39,16 @@ function Newpost() {
                 let iUrl = response.data.urls.raw + "&fit=crop&w=460&h=250";
                 // setLoading(true)
                 console.log(iUrl)
-                return setForm({
+                setForm({
                     title: '',
                     text: '',
                     imageUrl: iUrl
                 })
             })
-            } catch(error) {
-                console.log(error)
+            } catch(isError) {
+                console.log(isError)
                 // setLoading(true)
-                return setForm({
+                setForm({
                     title: '',
                     text: '',
                     imageUrl: 'https://images.unsplash.com/photo-1635604392842-69afcee9e0ad?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=250&ixid=MnwxfDB8MXxyYW5kb218MHx8Mnx8fHx8fDE2NDQzNjQ0MDU&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=460'
@@ -54,7 +56,7 @@ function Newpost() {
             }
         }
 
-        const {data,  isLoading, isError } = useQuery('response', fetchAPI )
+       
 
         // if (isLoading) {
         //   return console.log('Загрузка данных...')
