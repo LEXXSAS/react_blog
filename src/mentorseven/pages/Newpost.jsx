@@ -32,11 +32,11 @@ function Newpost() {
 
         async function fetchAPI() {
           try {
-            await axios.get(`https://api.unsplash.com/photos/random/?client_id=${clientIDTwo}`)
+            await axios.get(`https://api.unsplash.com/photos/random/?client_id=${clientID}`)
             .then(response => {
                 let iUrl = response.data.urls.raw + "&fit=crop&w=460&h=250";
                 // setLoading(true)
-                // console.log(iUrl)
+                console.log(iUrl)
                 return setForm({
                     title: '',
                     text: '',
@@ -56,13 +56,13 @@ function Newpost() {
 
         const {data,  isLoading, isError } = useQuery('response', fetchAPI )
 
-        if (isLoading) {
-          return console.log('Загрузка данных...')
-        }
+        // if (isLoading) {
+        //   return console.log('Загрузка данных...')
+        // }
 
-        if (data) {
-          return console.log('Данные загружены')
-        }
+        // if (data) {
+        //   return console.log('Данные загружены')
+        // }
 
         // old код без React query
 
