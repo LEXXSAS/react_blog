@@ -3,6 +3,7 @@ import {Form, Button, Row} from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom';
 import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
 import {auth} from '../../firebase'
+import FadeIn from "react-fade-in";
 
 const Login = () => {
 
@@ -64,7 +65,7 @@ const Login = () => {
     }, [])
 
   return (
-<>
+<FadeIn>
       {/* <div style={{height: '50px'}}></div> */}
       <div className='full-login'>
       <Form onSubmit={onSubmit} style={{maxWidth: '350px', margin: '0 auto'}} className='container'>
@@ -85,7 +86,7 @@ const Login = () => {
         </Button>
       </Form>
       </div>
-</>
+</FadeIn>
   )
 }
 

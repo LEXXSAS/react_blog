@@ -47,6 +47,7 @@ img {
 .full-post {
     background-color: #fff;
     padding: 30px;
+    border-radius: 10px;
     /* position: relative; */
 }
 
@@ -124,6 +125,51 @@ a:hover {
 }
 .btn-secondary:hover {
     background-color: #50564c;
+}
+
+
+
+.card-body {
+    display: flex;
+    flex: 1 1 auto;
+    padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x);
+    color: var(--bs-card-color);
+    flex-direction: column;
+}
+
+p.card-text {
+    flex-grow: 1;
+}
+
+.card {
+    min-height: 463px;
+}
+
+/* .skeleton {
+    opacity: .7;
+    animation: skeleton-loading 1s linear infinite alternate;
+} */
+
+.fakeimage {
+    margin-top: -5px;
+}
+
+.fakecardbody {
+    display: flex;
+    flex: 1 1 auto;
+    padding: var(--bs-card-spacer-y) var(--bs-card-spacer-x);
+    color: var(--bs-card-color);
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-color: hsl(200, 20%, 70%);
+    }
+    100% {
+        background-color: hsl(200, 20%, 95%);
+    }
 }
 
 /* @media (min-width: 950px) {

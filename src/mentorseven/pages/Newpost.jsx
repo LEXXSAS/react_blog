@@ -5,8 +5,8 @@ import axios from 'axios';
 import {db} from '../firebase'
 import { collection, onSnapshot, doc, addDoc, deleteDoc, orderBy, query } from 'firebase/firestore'
 import {QueryClient, QueryClientProvider, useQuery} from 'react-query'
-
-
+import { AppContext } from '../components/context';
+import FadeIn from "react-fade-in";
 
 // async function fetchAPI() {
 //   const response = await axios.get(`https://api.unsplash.com/photos/random/?client_id=${clientIDTwo}`)
@@ -18,7 +18,8 @@ function Newpost() {
     // const [userRequest, setUserRequest] = useState({
     //     loading: false
     // })
-    // const [loading, setLoading] = useState(false);
+    // const [loading, setLoading] = useState(true);
+    // const {loading, setLoading} = React.useContext(AppContext);
 
     const [form, setForm] = useState({
         title: '',
@@ -37,7 +38,7 @@ function Newpost() {
             await axios.get(`https://api.unsplash.com/photos/random/?client_id=${clientID}`)
             .then(response => {
                 let iUrl = response.data.urls.raw + "&fit=crop&w=460&h=250";
-                // setLoading(true)
+                // setLoading(false)
                 console.log(iUrl)
                 setForm({
                     title: '',
@@ -47,7 +48,7 @@ function Newpost() {
             })
             } catch(isError) {
                 console.log(isError)
-                // setLoading(true)
+
                 setForm({
                     title: '',
                     text: '',
@@ -155,7 +156,7 @@ function Newpost() {
       }
 
     return (
-<>
+<FadeIn>
       <div className='full-login'>
       <Form onSubmit={handleSubmit} style={{maxWidth: '350px', margin: '0 auto'}} className='container'>
           <Row>
@@ -175,7 +176,7 @@ function Newpost() {
         </Button>
       </Form>
       </div>
-</>
+</FadeIn>
     );
 }
 

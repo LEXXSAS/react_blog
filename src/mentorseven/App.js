@@ -14,7 +14,8 @@ import Profile from './pages/Profile';
 import Profiletest from './pages/Profiletest';
 import Newpost from './pages/Newpost';
 import {db} from './firebase'
-import { collection, onSnapshot, doc, addDoc, deleteDoc, orderBy, query } from 'firebase/firestore'
+import { collection, onSnapshot, doc, addDoc, deleteDoc, orderBy, query, getDocs } from 'firebase/firestore'
+
 
 
 
@@ -22,6 +23,8 @@ import { collection, onSnapshot, doc, addDoc, deleteDoc, orderBy, query } from '
 function App() {
 
       const [posts, setPosts] = useState([])
+
+      const [loading, setLoading] = useState(false);
       
       const [form, setForm] = useState({
         title: '',
@@ -29,13 +32,19 @@ function App() {
         imageUrl: '',
       })
     
-      const [popupActive, setPopupActive] = useState([])
-      
+      // const [popupActive, setPopupActive] = useState([])
+
+      // const [on, setOn] = useState(false); 
+
+      // const recipesCollectionRef = collection(db, 'posts')
+      // const q = query(recipesCollectionRef, orderBy('title', 'asc'))
       const recipesCollectionRef = collection(db, 'posts')
       const q = query(recipesCollectionRef, orderBy('title', 'asc'))
-    
+
       useEffect(() => {
+
         onSnapshot(q, snapshot => {
+          setLoading(true);
           setPosts(snapshot.docs.map(doc => {
             return {
               id: doc.id,
@@ -45,6 +54,32 @@ function App() {
         }))
       })
       }, [])
+
+    //   const findAll = async () => {
+    //     const q = query(recipesCollectionRef, orderBy('title', 'asc'))
+    
+    //     onSnapshot(q, snapshot => {
+    //       setLoading(true);
+    //       setPosts(snapshot.docs.map(doc => {
+    //         return {
+    //           id: doc.id,
+    //           viewing: false,
+    //           ...doc.data()
+    //         }
+    //     }))
+    //   })
+    
+      
+    // }
+  
+    //   const fetchData = async () => {
+    //       await findAll()
+    //       setLoading(true)
+    //   }
+  
+    //   useEffect(() => {
+    //       fetchData()
+    //   }, [])
 
       const removePost = (id) => {
         deleteDoc(doc(db, 'posts', id))
@@ -67,13 +102,14 @@ function App() {
           top: 0,
           behavior: 'smooth'
         });
+        
       };
       
 
     // let id = window.location.pathname.split('/post/')[1]
     
     return (
-        <AppContext.Provider value={{posts, removePost}} >
+        <AppContext.Provider value={{posts, removePost, loading, setLoading}} >
         <div className='d-flex flex-column min-vh-100'>
 
 
