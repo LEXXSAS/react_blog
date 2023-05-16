@@ -3,6 +3,7 @@ import { onAuthStateChanged, signOut } from 'firebase/auth'
 import {auth} from '../../firebase'
 import { useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
+import FadeIn from "react-fade-in";
 
 const Profile = () => {
 
@@ -42,6 +43,7 @@ const Profile = () => {
   }
 
    return  (
+    <FadeIn>
     <div>
        <div>
       <div className="full-post">
@@ -54,6 +56,7 @@ const Profile = () => {
       </div>
       </div>
     </div>
+    </FadeIn>
    )
 
 
