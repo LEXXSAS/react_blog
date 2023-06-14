@@ -186,6 +186,13 @@ p.card-text {
     }
 }
 
+@media (min-width: 768px) {
+.row-cols-md-2>* {
+    flex: 0 0 auto;
+    width: 33.3% !important;
+}
+}
+
 @media (max-width: 450px) {
     .header {
         display: flex;

@@ -17,9 +17,6 @@ import {db} from './firebase'
 import { collection, onSnapshot, doc, addDoc, deleteDoc, orderBy, query, getDocs } from 'firebase/firestore'
 
 
-
-
-
 function App() {
 
       const [posts, setPosts] = useState([])

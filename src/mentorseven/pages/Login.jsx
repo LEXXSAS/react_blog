@@ -34,18 +34,8 @@ const Login = () => {
           alert('Ошибка! Неверная почта или пароль')
         });
 
-        // const resp = await fetch(`https://mentor.archakov.im/api/mock/login?email=${fields.email}&password=${fields.password}`);
-        // if (resp.ok) {
-        //     const {token} = await resp.json();
-        //     window.localStorage.setItem('token', token);
-        //     navigate('/profiletest')
-        // } else {
-        //     alert('Ошибка! Неверная почта или пароль')
-        // }
-
     }
 
-    
     const [authUser, setAuthUser] = useState(null);
   
     useEffect(() => {
@@ -66,7 +56,6 @@ const Login = () => {
 
   return (
 <FadeIn>
-      {/* <div style={{height: '50px'}}></div> */}
       <div className='full-login'>
       <Form onSubmit={onSubmit} style={{maxWidth: '350px', margin: '0 auto'}} className='container'>
           <Row>
