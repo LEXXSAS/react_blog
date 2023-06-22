@@ -26,7 +26,8 @@ const Fullpost = () => {
         <div className="full-post">
         <h2 className='postheader'>{post.title}</h2>
         <div style={{marginBottom: '1rem'}}>
-          <img style={{width: '50%', height: 'auto'}} src={post.imageUrl} alt={post.title} />
+          <img style={{width: '100%', height: 'auto'}} src={post.imageUrl} alt={post.title} />
+          {/* <img style={{width: '50%', height: 'auto'}} src={post.imageUrl} alt={post.title} /> */}
         </div>
         <p className='paragraph'>{post.text}</p>
         <Link to="/">
