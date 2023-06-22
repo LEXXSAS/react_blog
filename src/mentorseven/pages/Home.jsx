@@ -61,7 +61,7 @@ export const Home = () => {
             response.items.forEach((item) => {
                 getDownloadURL(item).then((url) => {
                     setImageList((prev) => [...prev, url])
-                    console.log(url)
+                    // console.log(url)
                 })
             })
         })
@@ -187,7 +187,7 @@ return  (
                 </Card.Text>
                 <div className='cardbtns'>
                 <Link to={`/post/${post.id}`}><Button variant='primary'>Читать</Button></Link>
-                {isAuth && <Button style={{marginLeft: '0.3rem'}} onClick={() => removePost(post.id)}>Удалить</Button>}
+                {isAuth && <Button style={{marginLeft: '0.3rem'}} onClick={() => removePost(post)}>Удалить</Button>}
                 </div>
                 </Card.Body>
             </Card>

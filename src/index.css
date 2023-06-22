@@ -33,6 +33,7 @@ img {
     height: auto;
     top: 0;
     left: 0; */
+    /* height: auto; */
 }
 
 /* .card-img, .card-img-bottom, .card-img-top {
@@ -152,7 +153,8 @@ p.card-text {
 }
 
 .card {
-    min-height: 463px;
+    min-height: 490px;
+    /* min-height: 463px; */
 }
 
 /* .skeleton {
@@ -195,6 +197,9 @@ p.card-text {
 /* .cardtitle {
     padding-top: 80px;
 } */
+
+
+
 @media (min-width: 1024px) {
     .upclick {
         right: 50px;
@@ -204,8 +209,16 @@ p.card-text {
 @media (min-width: 768px) {
 .row-cols-md-2>* {
     flex: 0 0 auto;
-    width: 33.3% !important;
+    width: 50% !important;
+    /* width: 33.3% !important; */
 }
+}
+
+@media (min-width: 1440px) {
+    .row-cols-md-2>* {
+        flex: 0 0 auto;
+        width: 33.3% !important;
+    }
 }
 
 @media (max-width: 450px) {

@@ -15,8 +15,11 @@ const app = initializeApp(firebaseConfig);
 
 const storage = getStorage(app);
 
+const storageRef = ref(storage);
+
 const db = getFirestore(app);
 
 
 export {db} 
 export {storage}
+export {storageRef}

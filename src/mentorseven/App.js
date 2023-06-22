@@ -15,6 +15,7 @@ import Profiletest from './pages/Profiletest';
 import Newpost from './pages/Newpost';
 import {db} from './firebase'
 import { collection, onSnapshot, doc, addDoc, deleteDoc, orderBy, query, getDocs } from 'firebase/firestore'
+import {ref, deleteObject, getStorage} from 'firebase/storage'
 
 
 function App() {
@@ -79,8 +80,21 @@ function App() {
     //       fetchData()
     //   }, [])
 
-      const removePost = (id) => {
-        deleteDoc(doc(db, 'posts', id))
+
+    const storage = getStorage();
+
+      const removePost = (post) => {
+        deleteDoc(doc(db, 'posts', post.id));
+
+        // const imageRef = ref(storage, `images/${post.imageUrl}`);
+        // const imageRef = ref(storage, `images/3nvU9l-BrSc.jpg`);
+
+        // deleteObject(imageRef).then(() => {
+        //   console.log('Файл удалён!');
+        // }).catch((error) => {
+        //   console.log(error)
+        // })
+        // console.log(post.imageUrl)
       }
 
       const [showButton, setShowButton] = useState(false);

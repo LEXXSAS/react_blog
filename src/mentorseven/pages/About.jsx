@@ -19,7 +19,7 @@ function About() {
             <div style={{marginBottom: '1rem'}}>
             
             {!load && <MYSkeletonabout/>}
-            <img src={artTwo} alt="About" onLoad={activeLoad} />
+            <img style={{width: '630px', height: '375px'}} src={artTwo} alt="About" onLoad={activeLoad} />
             </div>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel amet voluptate quos minus odio quam, vitae assumenda ullam. Molestias, harum iure quisquam natus nihil vitae aut tenetur mollitia doloremque maiores!</p>
             </div>

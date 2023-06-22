@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Button } from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
 import { AppContext } from '../components/context';
@@ -17,6 +17,10 @@ const Fullpost = () => {
     //     navigate('/', {replace: true});
     //   }, 3000)
     // }, [])
+
+    useEffect(() => {
+      window.scrollTo(0, 0);
+    }, [])
 
     if (!post) {
       return <h4>Статья не найдена 😔</h4>
