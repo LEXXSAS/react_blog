@@ -19,6 +19,7 @@ import { collection, onSnapshot, doc, addDoc, deleteDoc, orderBy, query, getDocs
 
 function App() {
 
+      const [products, setProducts] = useState([]);
       const [posts, setPosts] = useState([])
 
       const [loading, setLoading] = useState(false);
@@ -106,7 +107,7 @@ function App() {
     // let id = window.location.pathname.split('/post/')[1]
     
     return (
-        <AppContext.Provider value={{posts, removePost, loading, setLoading}} >
+        <AppContext.Provider value={{posts, removePost, loading, setLoading, products, setProducts}} >
         <div className='d-flex flex-column min-vh-100'>
 
 
