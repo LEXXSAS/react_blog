@@ -153,8 +153,8 @@ p.card-text {
 }
 
 .card {
-    min-height: 490px;
-    /* min-height: 463px; */
+    min-height: 463px;
+    /* min-height: 490px; */
 }
 
 /* .skeleton {
@@ -179,6 +179,14 @@ p.card-text {
     width: 150px;
     height: auto;
 }
+
+.cardheader {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+
+/* .input-group-addon{color:#ff0000; background-color: #ffffff;} */
 
 @keyframes skeleton-loading {
     0% {

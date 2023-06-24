@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import {Form, Button, Row} from 'react-bootstrap'
+import {Form, Button, Row, InputGroup} from 'react-bootstrap'
 import { useNavigate } from 'react-router-dom';
-import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
+import { onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import {auth} from '../../firebase'
 import FadeIn from "react-fade-in";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faEyeSlash, faEye, faEnvelope, faEnvelopeCircleCheck} from '@fortawesome/free-solid-svg-icons'
 
 const Login = () => {
 
@@ -46,6 +48,10 @@ const Login = () => {
         } else {
           setAuthUser(null)
           navigate('/login')
+          signOut(auth)
+            console.log('вы вышли')
+            window.localStorage.removeItem('token');
+            window.localStorage.removeItem('email');
         }
       })
   
@@ -54,6 +60,13 @@ const Login = () => {
       }
       
     }, [])
+
+
+    const [show, setShow] = useState(true);
+
+    const showHide = () => {
+      setShow(!show);
+    }
 
     // const [isAuth, setIsAuth] = React.useState(false);
 
@@ -74,13 +87,25 @@ const Login = () => {
           <Row>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Email</Form.Label>
+          <InputGroup>
           <Form.Control onChange={handleChangeInput} name='email' type="email" value={fields.email} placeholder="Введите адрес почты" />
+          <InputGroup.Text id='basic-addon1'>
+          <FontAwesomeIcon size='lg' icon={faEnvelope} />
+          </InputGroup.Text>
+          </InputGroup>
         </Form.Group>
         </Row>
         <Row>
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
-          <Form.Control onChange={handleChangeInput} name='password' type="password" value={fields.password} placeholder="Введите пароль" />
+          <InputGroup>
+          {show === true ? <Form.Control onChange={handleChangeInput} name='password' type='password' value={fields.password} placeholder="Введите пароль" /> :
+          <Form.Control onChange={handleChangeInput} name='password' type='text' value={fields.password} placeholder="Введите пароль" />}
+          <InputGroup.Text id='basic-addon1' onClick={showHide}>
+          {show === true ? <FontAwesomeIcon icon={faEyeSlash} /> :
+          <FontAwesomeIcon icon={faEye} />}
+          </InputGroup.Text>
+          </InputGroup>
         </Form.Group>
         </Row>
         <Button variant="primary" type="submit">

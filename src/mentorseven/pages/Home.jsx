@@ -9,13 +9,14 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import noimage from '../img/noimage.jpg'
 import Fakecard from '../components/Fakecard';
 import MYSkeleton from '../components/mySkeleton';
-import {storage, db} from '../firebase'
-import { collection, getFirestore, onSnapshot, doc, addDoc, deleteDoc, orderBy, query, getDocs, serverTimestamp, updateDoc, DocumentData } from 'firebase/firestore'
+import {storage, db, auth } from '../firebase'
+import { collection, getFirestore, onSnapshot, doc, addDoc, deleteDoc, orderBy, query, getDocs, serverTimestamp, updateDoc, DocumentData, Timestamp } from 'firebase/firestore'
 import {getStorage, uploadBytesResumable, ref, uploadBytes, listAll, getDownloadURL, updateMetadata} from 'firebase/storage'
 import { useState } from 'react';
 import {v4} from 'uuid'
 import { useEffect } from 'react';
 import ProductCards from '../components/productCards';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 
 export const Home = () => {
 
@@ -37,6 +38,24 @@ export const Home = () => {
             setIsAuth(false)
         }
     }, [])
+
+    React.useEffect(() => {
+        const listen = onAuthStateChanged(auth, (user) => {
+          if (user) {
+            setIsAuth(true)
+          } else {
+            setIsAuth(false)
+            signOut(auth)
+            console.log('вы вышли')
+            window.localStorage.removeItem('token');
+            window.localStorage.removeItem('email');
+          }
+        })
+        return () => {
+          listen();
+        }
+        
+      }, [])
 
     useScrollPosition("Home")
 
@@ -167,6 +186,14 @@ export const Home = () => {
     //     </>
     // )
 
+    // function dateGet(posts) {
+    //     posts.map((post) => {
+    //         const dateCorrect = new Date(post.created_at * 1000);
+    //         console.log(dateCorrect)
+    //     })
+    // }
+    // dateGet(posts)
+
 return  (
     <>
     {!loading ?
@@ -185,18 +212,20 @@ return  (
     {posts.map((post, index) => (
     <Col key={post.id}>
     <FadeIn>
-            <Card>
+            <Card style={{height: '490px'}}>
                 <Link to={`/post/${post.id}`}><Card.Img variant="top" src={post.imageUrl} /></Link>
                 <Card.Body>
                 <Card.Title className='cardtitle'>{post.title}</Card.Title>
                 <Card.Text>
-                    {post.text.substr(0, 150)}...
+                    {post.text.substr(0, 100)}...
                 </Card.Text>
                 <div className='cardbtns'>
                 <Link to={`/post/${post.id}`}><Button variant='primary'>Читать</Button></Link>
                 {isAuth && <Button style={{marginLeft: '0.3rem'}} onClick={() => removePost(post)}>Удалить</Button>}
                 </div>
                 </Card.Body>
+                {/* <p style={{marginTop: '-8px'}}><small class="text-muted" style={{marginLeft: '1rem'}}>date</small></p> */}
+                {/* <p style={{marginTop: '-8px'}}><small class="text-muted" style={{marginLeft: '1rem'}}>Last updated 3 mins ago</small></p> */}
             </Card>
         </FadeIn>
     </Col>
