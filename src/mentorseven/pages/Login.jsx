@@ -45,6 +45,7 @@ const Login = () => {
           navigate('/profile')
         } else {
           setAuthUser(null)
+          navigate('/login')
         }
       })
   
@@ -53,6 +54,18 @@ const Login = () => {
       }
       
     }, [])
+
+    // const [isAuth, setIsAuth] = React.useState(false);
+
+    // React.useEffect(() => {
+    //     if (window.localStorage.getItem('email') === 'alex.s.86@mail.ru') {
+    //         setIsAuth(true)
+    //         navigate('/profile')
+    //     } else {
+    //         setIsAuth(false)
+    //         navigate('/login')
+    //     }
+    // }, [])
 
   return (
 <FadeIn>

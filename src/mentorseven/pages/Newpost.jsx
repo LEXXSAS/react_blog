@@ -154,6 +154,7 @@ function Newpost() {
               );
   
               if (res && inputFile) {
+                  alert('Статья создана')
                   setDisabled(false);
                   setForm({
                     title: '',
@@ -215,9 +216,13 @@ function Newpost() {
           <Form.Control as="textarea" rows={7}  name='text' type="text" placeholder="Введите текст" value={form.text} onChange={e => setForm({...form, text: e.target.value})} />
         </Form.Group>
         </Row>
-        <Button variant="primary" type="submit">
+        {disabled === false ? <Button variant="primary" type="submit" disabled={disabled} >
           Добавить статью
-        </Button>
+        </Button> :
+        <Button style={{width: '149px'}} variant="primary" type="submit" disabled={disabled} >
+          Загрузка...
+        </Button>}
+        {/* <p>Loading...</p> */}
         <br />
         <FormControlLabel
           label="Рандомное изображение"

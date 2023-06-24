@@ -81,20 +81,27 @@ function App() {
     //   }, [])
 
 
-    const storage = getStorage();
+     const storage = getStorage();
 
       const removePost = (post) => {
         deleteDoc(doc(db, 'posts', post.id));
 
+        // const fileUrl = post.imageUrl;
+        // const indexOfEndPath = fileUrl.indexOf("?");
+        // const imagePath = fileUrl.substring(0, indexOfEndPath);
+        // const newImagePath = imagePath.replace('%2F', '/');
+
+        const imageRef = ref(storage, post.imageUrl);
+
         // const imageRef = ref(storage, `images/${post.imageUrl}`);
         // const imageRef = ref(storage, `images/3nvU9l-BrSc.jpg`);
 
-        // deleteObject(imageRef).then(() => {
-        //   console.log('Файл удалён!');
-        // }).catch((error) => {
-        //   console.log(error)
-        // })
-        // console.log(post.imageUrl)
+        deleteObject(imageRef).then(() => {
+          console.log('Файл удалён!');
+        }).catch((error) => {
+          console.log(error)
+        })
+
       }
 
       const [showButton, setShowButton] = useState(false);

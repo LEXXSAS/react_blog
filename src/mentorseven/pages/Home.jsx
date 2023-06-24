@@ -40,6 +40,13 @@ export const Home = () => {
 
     useScrollPosition("Home")
 
+    // useEffect(() => {
+    //       if (window.pageYOffset > 50) {
+    //         window.scrollTo(0, 0);
+    //       } else {
+    //       }
+    //   }, []);
+
     
     const [imageUpload, setImageUpload] = useState(null);
     const [imageList, setImageList] = useState([]);
