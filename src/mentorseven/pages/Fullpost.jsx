@@ -3,8 +3,12 @@ import { Card, Button } from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
 import { AppContext } from '../components/context';
 import { Link } from 'react-router-dom';
+import MYSkeletonabout from '../components/MYSkeletonabout';
+import { useLocation } from 'react-router-dom';
 
 const Fullpost = () => {
+  const [load, setLoad] = React.useState(false)
+
   const {posts} = React.useContext(AppContext)
     const navigate = useNavigate();
     let {id} = useParams();
@@ -24,8 +28,26 @@ const Fullpost = () => {
       }
     }, [])
 
+    // let {pathname} = useLocation();
+    // let pathId = pathname.split('/post/')[1]
+    // const pathName = pathname.replace(`${pathId}`, '');
+
     if (!post) {
-      return <h4>Статья не найдена 😔</h4>
+      return (
+        <MYSkeletonabout/>
+        // <Card>
+        // <Card.Body style={{padding: '1rem 0', paddingTop: '8px'}}>
+        // <Card.Title style={{padding: '1rem 1rem'}} className='cardtitle'></Card.Title>
+        // <MYSkeletonabout/>
+        // <Card.Text style={{padding: '0 1rem', paddingTop: '1rem'}} >
+        // </Card.Text>
+        // </Card.Body>
+        // </Card>
+      )
+    }
+
+    function activeLoad() {
+        setLoad(true)
     }
     
     return (
@@ -44,7 +66,10 @@ const Fullpost = () => {
                 <Card.Body style={{padding: '1rem 0', paddingTop: '8px'}}>
                 <Card.Title style={{padding: '1rem 1rem'}} className='cardtitle'>{post.title}</Card.Title>
                 {/* <Card.Title style={{padding: '0 1rem'}} className='cardtitle'>{post.title}</Card.Title> */}
-                <Card.Img className='cardimg' style={{width: '100%', height: 'auto', borderRadius: '0'}} variant='top' src={post.imageUrl} />
+                {!load && <MYSkeletonabout/>}
+                {<Card.Img className='cardimg' style={{width: '100%', height: 'auto', borderRadius: '0', display: 'none'}} onLoad={activeLoad} variant='top' src={post.imageUrl} />}
+                {load && <Card.Img className='cardimg' style={{width: '100%', height: 'auto', borderRadius: '0', display: 'block'}} variant='top' src={post.imageUrl} />}
+
                 <Card.Text style={{padding: '0 1rem', paddingTop: '1rem'}} >
                   {post.text}
                 </Card.Text>

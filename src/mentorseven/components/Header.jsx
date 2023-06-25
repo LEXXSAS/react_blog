@@ -51,7 +51,7 @@ function Header() {
 
     return (
         <div className='header-small' style={{padding: '0 1.5rem'}}>
-                <ToastContainer
+                {/* <ToastContainer
                 position="top-right"
                 autoClose={2500}
                 hideProgressBar
@@ -62,7 +62,7 @@ function Header() {
                 draggable
                 pauseOnHover
                 theme="dark"
-                />
+                /> */}
             <div className='container'>
                 <div className='header'>
 
