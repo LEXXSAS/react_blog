@@ -1,9 +1,10 @@
-import React, { createContext, useContext } from 'react'
+import React, { createContext, useContext, useEffect } from 'react'
 import {Nav, Navbar, Button} from 'react-bootstrap';
 import { Link, useMatch, useParams } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-
+import { Bounce, toast, ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 function Header() {
     // const [us, setUs] = React.useState(false)
@@ -28,8 +29,40 @@ function Header() {
     // return setUs(!false)
     // }
 
+    // const notifydesctop = () => {
+    //     toast.success('Приветствую путник!', {
+    //         position: "top-right",
+    //         autoClose: 2500,
+    //         hideProgressBar: true,
+    //         closeOnClick: true,
+    //         pauseOnHover: true,
+    //         draggable: true,
+    //         progress: undefined,
+    //         theme: "dark",
+    //         });
+    //   }
+      
+    //   useEffect(() => {
+    //     const timer = setTimeout(() => {
+    //         notifydesctop()
+    //     }, 1000)
+    //     return () => clearTimeout(timer)
+    //   }, [])
+
     return (
         <div className='header-small' style={{padding: '0 1.5rem'}}>
+                <ToastContainer
+                position="top-right"
+                autoClose={2500}
+                hideProgressBar
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="dark"
+                />
             <div className='container'>
                 <div className='header'>
 

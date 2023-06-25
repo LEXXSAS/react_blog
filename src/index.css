@@ -240,6 +240,26 @@ p.card-text {
     list-style: none;
 }
 
+.Toastify__toast-theme--dark {
+    background: #f87c07bf !important;
+    color: var(--toastify-text-color-dark);
+    /* background: #f87b07 !important; */
+}
+
+.card-footer {
+    padding: var(--bs-card-cap-padding-y) var(--bs-card-cap-padding-x);
+    color: var(--bs-card-cap-color);
+    background-color: var(--bs-card-cap-bg);
+    border-top: none;
+     /* border-top: var(--bs-card-border-width) solid var(--bs-card-border-color); */
+}
+
+.text-muted {
+    --bs-text-opacity: 1;
+    color: #7f8b95cf!important;
+    font-size: 14px;
+}
+
 /* @media (min-width: 950px) {
     .upclick {
         right: 130px;

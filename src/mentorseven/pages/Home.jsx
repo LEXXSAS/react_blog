@@ -17,6 +17,8 @@ import {v4} from 'uuid'
 import { useEffect } from 'react';
 import ProductCards from '../components/productCards';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
+import moment from 'moment'
+
 
 export const Home = () => {
 
@@ -188,11 +190,12 @@ export const Home = () => {
 
     // function dateGet(posts) {
     //     posts.map((post) => {
-    //         const dateCorrect = new Date(post.created_at * 1000);
+    //         const dateCorrect = post.created_at.toDate();
     //         console.log(dateCorrect)
     //     })
     // }
     // dateGet(posts)
+    // const dateCorrect = new Date(post.created_at * 1000);
 
 return  (
     <>
@@ -224,7 +227,8 @@ return  (
                 {isAuth && <Button style={{marginLeft: '0.3rem'}} onClick={() => removePost(post)}>Удалить</Button>}
                 </div>
                 </Card.Body>
-                {/* <p style={{marginTop: '-8px'}}><small class="text-muted" style={{marginLeft: '1rem'}}>date</small></p> */}
+                <Card.Footer className="text-muted">{moment(post.created_at.toDate()).format('DD/MM/YYYY').replaceAll('/', '.')}</Card.Footer>
+                {/* <p style={{marginTop: '-8px', paddingLeft: '3px', textAlign: 'right', paddingRight: '1rem'}}><small class="text-muted" style={{marginLeft: '1rem'}}>{moment(post.created_at.toDate()).format('DD/MM/YYYY').replaceAll('/', '.')}</small></p> */}
                 {/* <p style={{marginTop: '-8px'}}><small class="text-muted" style={{marginLeft: '1rem'}}>Last updated 3 mins ago</small></p> */}
             </Card>
         </FadeIn>

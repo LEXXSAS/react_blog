@@ -123,7 +123,8 @@ function App() {
         });
         
       };
-      
+
+
 
     // let id = window.location.pathname.split('/post/')[1]
     
@@ -133,6 +134,7 @@ function App() {
 
 
             <Header />
+
 
 
         <div className='container'>
