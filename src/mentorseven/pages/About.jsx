@@ -4,6 +4,7 @@ import FadeIn from "react-fade-in";
 import noimage from '../img/noimage.jpg'
 import MYSkeletonabout from '../components/MYSkeletonabout';
 import {Card, Button} from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 function About() {
     const [load, setLoad] = React.useState(false)
@@ -38,9 +39,9 @@ function About() {
                 От себя добавил много доработок, касаемых функционала, также правки стилей css для более правильного отображения с сохранением общей стилистики.<br/> 
                 Авторизация, а также хранение, выгрузка изображений построена на технологиях Google firebase.
                 </Card.Text>
-                {/* <div className='cardbtns'>
-                <Link to={`/post/${post.id}`}><Button variant='primary'>Читать</Button></Link>
-                </div> */}
+                <div style={{paddingBottom: '8px'}} className='cardbtns'>
+                <Link style={{padding: '0 1rem'}} to='/'><Button variant='primary'>Назад</Button></Link>
+                </div>
                 </Card.Body>
                 {/* <p style={{marginTop: '-8px'}}><small class="text-muted" style={{marginLeft: '1rem'}}>date</small></p> */}
             </Card>
