@@ -32,16 +32,16 @@ function App() {
       })
     
       // const [popupActive, setPopupActive] = useState([])
-
       // const [on, setOn] = useState(false); 
 
       // const recipesCollectionRef = collection(db, 'posts')
       // const q = query(recipesCollectionRef, orderBy('title', 'asc'))
+      // const q = query(recipesCollectionRef, orderBy('timestamp', 'desc'))
+
       const recipesCollectionRef = collection(db, 'posts')
       const q = query(recipesCollectionRef, orderBy('title', 'asc'))
 
       useEffect(() => {
-
         onSnapshot(q, snapshot => {
           setLoading(true);
           setPosts(snapshot.docs.map(doc => {
@@ -53,7 +53,7 @@ function App() {
         }))
       })
       }, [])
-
+      
     //   const findAll = async () => {
     //     const q = query(recipesCollectionRef, orderBy('title', 'asc'))
     

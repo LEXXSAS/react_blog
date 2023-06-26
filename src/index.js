@@ -5,17 +5,14 @@ import {QueryClient, QueryClientProvider, useQuery} from 'react-query'
 
 
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-// import './tutorial-4-gen-phrases/App.css'
 import './index.css'
-
-
 import { HashRouter } from "react-router-dom";
 // import { BrowserRouter } from "react-router-dom";
 // import './mentorseven/index.css'
 // import './style.css'
 // import App from './App';
 
+// import './tutorial-4-gen-phrases/App.css'
 // import App from './tutorial-1/App'
 // import App from './tutorial-2/App'
 // import App from './tutorial-5/App'

@@ -5,11 +5,13 @@ import { AppContext } from '../components/context';
 import { Link } from 'react-router-dom';
 import MYSkeletonabout from '../components/MYSkeletonabout';
 import { useLocation } from 'react-router-dom';
+import FadeIn from "react-fade-in";
 
 const Fullpost = () => {
   const [load, setLoad] = React.useState(false)
 
   const {posts} = React.useContext(AppContext)
+
     const navigate = useNavigate();
     let {id} = useParams();
 
@@ -34,15 +36,23 @@ const Fullpost = () => {
 
     if (!post) {
       return (
-        <MYSkeletonabout/>
-        // <Card>
-        // <Card.Body style={{padding: '1rem 0', paddingTop: '8px'}}>
-        // <Card.Title style={{padding: '1rem 1rem'}} className='cardtitle'></Card.Title>
-        // <MYSkeletonabout/>
-        // <Card.Text style={{padding: '0 1rem', paddingTop: '1rem'}} >
-        // </Card.Text>
-        // </Card.Body>
-        // </Card>
+        // <FadeIn>
+        <div className="full-post" style={{padding: 0}}>
+            <Card>
+                <Card.Body style={{padding: '1rem 0', paddingTop: '8px'}}>
+                <Card.Title style={{padding: '1rem 1rem'}} className='cardtitle'></Card.Title>
+                {!load && <MYSkeletonabout/>}
+                {<Card.Img className='cardimg' style={{width: '100%', height: 'auto', borderRadius: '0', display: 'none'}} onLoad={activeLoad} variant='top' />}
+                <Card.Text style={{padding: '0 1rem', paddingTop: '1rem'}} >
+                  
+                </Card.Text>
+                {/* <div style={{paddingBottom: '8px'}} className='cardbtns'>
+                <Link style={{padding: '0 1rem'}} to='/'><Button variant='primary'></Button></Link>
+                </div> */}
+                </Card.Body>
+            </Card>
+      </div>
+      // </FadeIn>
       )
     }
 
@@ -51,25 +61,14 @@ const Fullpost = () => {
     }
     
     return (
+      <FadeIn>
         <div className="full-post" style={{padding: 0}}>
-        {/* <h2 className='postheader'>{post.title}</h2>
-        <div style={{marginBottom: '1rem'}}>
-          <img style={{width: '100%', height: 'auto'}} src={post.imageUrl} alt={post.title} />
-        </div>
-        <p className='paragraph'>{post.text}</p>
-        <Link to="/">
-          <Button>Назад</Button>
-        </Link> */}
             <Card>
-                {/* <Card.Header className='cardheader'>{post.title}</Card.Header> */}
-                {/* <Card.Img className='cardimg' style={{width: '100%', height: 'auto'}} variant='top' src={post.imageUrl} /> */}
                 <Card.Body style={{padding: '1rem 0', paddingTop: '8px'}}>
                 <Card.Title style={{padding: '1rem 1rem'}} className='cardtitle'>{post.title}</Card.Title>
-                {/* <Card.Title style={{padding: '0 1rem'}} className='cardtitle'>{post.title}</Card.Title> */}
                 {!load && <MYSkeletonabout/>}
                 {<Card.Img className='cardimg' style={{width: '100%', height: 'auto', borderRadius: '0', display: 'none'}} onLoad={activeLoad} variant='top' src={post.imageUrl} />}
                 {load && <Card.Img className='cardimg' style={{width: '100%', height: 'auto', borderRadius: '0', display: 'block'}} variant='top' src={post.imageUrl} />}
-
                 <Card.Text style={{padding: '0 1rem', paddingTop: '1rem'}} >
                   {post.text}
                 </Card.Text>
@@ -79,6 +78,7 @@ const Fullpost = () => {
                 </Card.Body>
             </Card>
       </div>
+      </FadeIn>
     );
 }
 
