@@ -37,10 +37,9 @@ function App() {
       // const recipesCollectionRef = collection(db, 'posts')
       // const q = query(recipesCollectionRef, orderBy('title', 'asc'))
       // const q = query(recipesCollectionRef, orderBy('timestamp', 'desc'))
-
+      
       const recipesCollectionRef = collection(db, 'posts')
       const q = query(recipesCollectionRef, orderBy('created_at', 'desc'))
-      // const q = query(recipesCollectionRef, orderBy('created_at', 'desc'))
       // const q = query(recipesCollectionRef, orderBy('title', 'asc'))
 
       useEffect(() => {
