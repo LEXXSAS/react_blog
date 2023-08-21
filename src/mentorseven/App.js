@@ -39,7 +39,9 @@ function App() {
       // const q = query(recipesCollectionRef, orderBy('timestamp', 'desc'))
 
       const recipesCollectionRef = collection(db, 'posts')
-      const q = query(recipesCollectionRef, orderBy('title', 'asc'))
+      const q = query(recipesCollectionRef, orderBy('created_at', 'desc'))
+      // const q = query(recipesCollectionRef, orderBy('created_at', 'desc'))
+      // const q = query(recipesCollectionRef, orderBy('title', 'asc'))
 
       useEffect(() => {
         onSnapshot(q, snapshot => {
@@ -86,22 +88,20 @@ function App() {
       const removePost = (post) => {
         deleteDoc(doc(db, 'posts', post.id));
 
-        // const fileUrl = post.imageUrl;
-        // const indexOfEndPath = fileUrl.indexOf("?");
-        // const imagePath = fileUrl.substring(0, indexOfEndPath);
-        // const newImagePath = imagePath.replace('%2F', '/');
-
         const imageRef = ref(storage, post.imageUrl);
-
-        // const imageRef = ref(storage, `images/${post.imageUrl}`);
-        // const imageRef = ref(storage, `images/3nvU9l-BrSc.jpg`);
 
         deleteObject(imageRef).then(() => {
           console.log('Файл удалён!');
         }).catch((error) => {
           console.log(error)
         })
-
+        
+        // const fileUrl = post.imageUrl;
+        // const indexOfEndPath = fileUrl.indexOf("?");
+        // const imagePath = fileUrl.substring(0, indexOfEndPath);
+        // const newImagePath = imagePath.replace('%2F', '/');
+        // const imageRef = ref(storage, `images/${post.imageUrl}`);
+        // const imageRef = ref(storage, `images/3nvU9l-BrSc.jpg`);
       }
 
       const [showButton, setShowButton] = useState(false);

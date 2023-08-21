@@ -104,99 +104,6 @@ export const Home = () => {
     });
     const [disabled, setDisabled] = useState(false);
 
-    // const uploadProduct = async (formFields, file, fileName) => {
-    //     try {
-    //       const {title} = formFields;
-      
-    //       const imageRef = ref(storage, `images/${fileName}`);
-    //       const uploadImage = await uploadBytes(imageRef, file);
-      
-    //       const newMetadata = {
-    //         cachControl: 'public,max-age=2629800000',
-    //         contentType: uploadImage.metadata.contextType
-    //       };
-      
-    //       await updateMetadata(imageRef, newMetadata);
-      
-    //       const publicImageUrl = await getDownloadURL(imageRef)
-      
-    //       const cupsData = {
-    //         title: title,
-    //         imageUrl: publicImageUrl,
-    //         created_at: serverTimestamp()
-    //       }
-      
-    //       const cupRef = await addDoc(collection(db, 'cups'), cupsData);
-      
-    //       await updateDoc(cupRef, {
-    //         id: cupRef.id
-    //       });
-      
-    //       return cupRef.id;
-    //     } catch (error) {
-    //       console.log(error)
-    //     }
-    //   }
-
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault()
-    //     setDisabled(true);
-
-    //     if (fileUpload) {
-    //         const inputFile = fileRef.current;
-    //         const res = await uploadProduct(
-    //             formFields,
-    //             fileUpload[0],
-    //             fileUpload[0].name
-    //         );
-
-    //         if (res && inputFile) {
-    //             setDisabled(false);
-    //             setFormFields({title: ''});
-    //             setFileUpload(null);
-
-    //             inputFile.value = '';
-    //         }
-    //     }
-    // }
-
-    // const handleChange = (e) => {
-    //     const {name, value} = e.target
-    //     setFormFields({...formFields, [name]: value})
-    // }
-
-    // return (
-    //     <>
-    //     <form onSubmit={handleSubmit}>
-    //         <input
-    //         type="text"
-    //         name="title"
-    //         value={formFields.title || ''}
-    //         placeholder='Name'
-    //         onChange={handleChange}
-    //         />
-    //         <input
-    //         ref={fileRef}
-    //         type="file"
-    //         name="name"
-    //         accept='.png, .jpg, .jpeg'
-    //         onChange={(e) => setFileUpload(e.target.files)}
-    //         />
-    //         <button type='submit'>Loading</button>
-    //     </form>
-    //     <ProductCards products={products} />
-    //     </>
-    // )
-
-    // function dateGet(posts) {
-    //     posts.map((post) => {
-    //         const dateCorrect = post.created_at.toDate();
-    //         console.log(dateCorrect)
-    //     })
-    // }
-    // dateGet(posts)
-    // const dateCorrect = new Date(post.created_at * 1000);
-
 return  (
     <>
     {!loading ?
@@ -228,8 +135,6 @@ return  (
                 </div>
                 </Card.Body>
                 <Card.Footer className="text-muted">{moment(post.created_at.toDate()).format('DD/MM/YYYY').replaceAll('/', '.')}</Card.Footer>
-                {/* <p style={{marginTop: '-8px', paddingLeft: '3px', textAlign: 'right', paddingRight: '1rem'}}><small class="text-muted" style={{marginLeft: '1rem'}}>{moment(post.created_at.toDate()).format('DD/MM/YYYY').replaceAll('/', '.')}</small></p> */}
-                {/* <p style={{marginTop: '-8px'}}><small class="text-muted" style={{marginLeft: '1rem'}}>Last updated 3 mins ago</small></p> */}
             </Card>
         </FadeIn>
     </Col>
