@@ -148,7 +148,6 @@ return  (
     </Row>}
     <div className='cardbtns' style={{textAlign: 'center', marginTop: '1rem'}}>
     {/* <button style={{textAlign: 'center', width: '120px'}} onClick={fetchPrevData}>Previous page</button> */}
-    {/* <button  style={{textAlign: 'center', marginLeft: '0.3rem', width: '120px'}} onClick={fetchNextData}>Next page</button> */}
     <button  style={{textAlign: 'center', marginLeft: '0.3rem', width: '120px'}} onClick={fetchNextData}>Показать ещё</button>
     </div>
 
