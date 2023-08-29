@@ -262,7 +262,6 @@ p.card-text {
     display: none;
 }
 
-
 @media (min-width: 1024px) {
     .upclick {
         right: 50px;

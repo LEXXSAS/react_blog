@@ -9,7 +9,7 @@ const MYSkeleton = () => {
       {/* <SkeletonTheme color='#202020' highlightColor="#FFF"> */}
       <SkeletonTheme color='#202020'>
             <Col>
-                <Card>
+                <Card >
                     <div className="fakeimage">
                     <Skeleton height={250} width={`100%`} />
                     </div>
