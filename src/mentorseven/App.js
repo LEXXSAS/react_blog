@@ -13,6 +13,7 @@ import Login from './pages/Login';
 import Profile from './pages/Profile';
 import Profiletest from './pages/Profiletest';
 import Newpost from './pages/Newpost';
+import Updatepost from './pages/Updatepost';
 import {db} from './firebase'
 import { collection, onSnapshot, doc, addDoc, deleteDoc, orderBy, query, getDocs, startAfter, limit, endBefore, endAt, limitToLast } from 'firebase/firestore'
 import {ref, deleteObject, getStorage} from 'firebase/storage'
@@ -28,19 +29,24 @@ function App() {
       const [qTwo, setQTwo] = useState(null);
       const [qThree, setQThree] = useState(null);
       const [qLast, setQLast] = useState();
+      const [fetching, setFetching] = useState(false);
+      const [loadingNew, setLoadingNew] = useState(false);
       // const [form, setForm] = useState({
       //   title: '',
       //   text: '',
       //   imageUrl: '',
       // })
 
-      let pageSize = 3;
+      // количество загружаемых элементов
+      let pageSize = 6;
       
       const postsRef = collection(db, 'posts')
       // const first = query(recipesCollectionRef, orderBy('created_at', 'desc'), limit(9))
       // const q = query(recipesCollectionRef, orderBy('created_at', 'desc'), limit(9))
 
+      // значение при загрузке страницы - первые нескоьлко элементов равных limit(number)
       async function fetchData() {
+        // setFetching(true)
         const first = query(postsRef, orderBy('created_at', 'desc'), limit(pageSize));
         const response = await getDocs(first);
         setLoading(true);
@@ -54,18 +60,20 @@ function App() {
         setQTwo(lastVisible)
         // const lastVisible2 = response.docs[0];
         // setQThree(lastVisible2)
-
+        // setFetching(false)
         console.log('first docs map data', firstVisible);
         console.log("last docs id", lastVisible);
 
         console.log('posts', firstVisible)
       }
 
+      // следующее значение
       async function fetchNextData() {
         const next = query(postsRef, orderBy('created_at', 'desc'), startAfter(qTwo || 0), limit(pageSize));
         const responseNext = await getDocs(next);
+        setLoadingNew(true);
 
-        if (!responseNext.empty) {
+        if (!responseNext.empty && fetching) {
           console.log('next button on')
           const fV = responseNext.docs.map(data => {return {id: doc.id, viewing: false, ...data.data()}})
           setPosts([...posts, ...fV])
@@ -73,19 +81,25 @@ function App() {
           const nextVisible = responseNext.docs.map(data => {return data.data()});
           setQLast(nextVisible);
           console.log("next nextVisible docs map", nextVisible);
+          console.log('New data is loading')
   
           const newLastVisible = responseNext.docs[responseNext.docs.length - 1];
           setQTwo(newLastVisible)
           const nLV = responseNext.docs[0];
           setQThree(nLV)
+          setFetching(false);
         }
 
         else {
           console.log('next button test ok - data is empty')
+          setFetching(false);
+          setLoadingNew(false);
         }
         
       }
 
+
+      // предыдущее значение
       async function fetchPrevData() {
         
         const next = query(postsRef, orderBy('created_at', 'desc'), endBefore(qThree || 0), limitToLast(pageSize));
@@ -109,6 +123,7 @@ function App() {
 
         else  {
           console.log('prev button test ok - data is empty')
+          
         }
         
       }
@@ -117,9 +132,34 @@ function App() {
 
       useEffect(() => {
         fetchData();
+        setFetching(false)
       }, [])
 
+      useEffect(() => {
+        window.addEventListener('scroll', scrollHandler);
+        return () => {
+          window.removeEventListener('scroll', scrollHandler);
+          setFetching(false);
+        }
+      }, [])
 
+      const scrollHandler = (e) => {
+        // if (e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight) < 100)
+        const documentRect = document.documentElement.getBoundingClientRect();
+        if (documentRect.bottom < document.documentElement.clientHeight + 150) {
+          setFetching(true);
+          setLoadingNew(false)
+          
+        } else {
+          setFetching(false);
+        }
+      }
+
+      useEffect(() => {
+        if (fetching) {
+          fetchNextData()
+        }
+      }, [fetching])
 
       // useEffect(() => {
       //     onSnapshot(q, snapshot => {
@@ -144,6 +184,8 @@ function App() {
 
         deleteObject(imageRef).then(() => {
           console.log('Файл удалён!');
+          fetchNextData();
+          fetchData();
         }).catch((error) => {
           console.log(error)
         })
@@ -171,7 +213,7 @@ function App() {
       };
 
     return (
-        <AppContext.Provider value={{posts, removePost, loading, setLoading, products, setProducts, qLast, fetchData, fetchNextData, fetchPrevData, pageSize}} >
+        <AppContext.Provider value={{posts, removePost, loading, setLoading, products, setProducts, qLast, fetchData, fetchNextData, fetchPrevData, pageSize, fetching, setFetching, loadingNew}} >
         <div className='d-flex flex-column min-vh-100'>
           
 
@@ -188,6 +230,7 @@ function App() {
               <Route path='/newpost' element={<Newpost />} />
               <Route path='/about' element={<About />} /> 
               <Route path='/post/:id' element={<Fullpost />} />
+              <Route path='/updatepost/:id' element={<Updatepost />} />
               <Route path='/not-found' element={<NotFound />} />
               <Route path='*' element={<Navigate to="/not-found" />} />
             </Route>

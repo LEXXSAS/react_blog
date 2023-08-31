@@ -13,32 +13,9 @@ import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { getFirestore, getDocs, serverTimestamp, updateDoc, DocumentData } from 'firebase/firestore'
 import {getStorage, uploadBytesResumable, ref, uploadBytes, listAll, getDownloadURL, updateMetadata} from 'firebase/storage'
 
-function Newpost() {
+function Updatepost() {
 
   const {fetchNextData, fetchData} = React.useContext(AppContext)
-    // const [userRequest, setUserRequest] = useState({
-    //     loading: false
-    // })
-
-    // const [loading, setLoading] = useState(true);
-
-    // const {loading, setLoading} = React.useContext(AppContext);
-
-    // React.useEffect(() => {
-    //     checkRef.current = loading;
-    // }, [loading])
-
-    // const [autoImage, setAutoImage] = useState(() => {
-    //   const data = localStorage.getItem("todos");
-    //   if (typeof data === 'string') {
-    //     return JSON.parse(data);
-    //   } else {
-    //     return false
-    //   }
-    // });
-    
-
-    // checkbox with localStorage
 
     const [autoImage, setAutoImage] = useState(false);
 
@@ -64,40 +41,6 @@ function Newpost() {
         text: '',
         imageUrl: '',
       })
-
-    //   unsplash image link example
-    //   https://images.unsplash.com/photo-1682955212632-95fc551307cc?ixid=Mnw0NDYyNzF8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODM2NDUyNDk&ixlib=rb-4.0.3&fit=crop&w=460&h=250
-
-    // unsplash axios get image from api
-
-        // let clientID = 'rGjzWznfC6EPirpykjLXPmZF_fKj6g-EwJRauPvSV70';
-        // let clientIDTwo = '9tk8OKr9wnZvXVyodmmfQwvy1O6UzHrIaGKAfnu72Cw';
-
-        // const {data,  isLoading, isError } = useQuery('response', fetchAPI )
-
-        // async function fetchAPI() {
-        //   try {
-        //     await axios.get(`https://api.unsplash.com/photos/random/?client_id=${clientID}`)
-        //     .then(response => {
-        //         let iUrl = response.data.urls.raw + "&fit=crop&w=460&h=250";
-        //         // setLoading(false)
-        //         console.log(iUrl)
-        //         setForm({
-        //             title: '',
-        //             text: '',
-        //             imageUrl: iUrl
-        //         })
-        //     })
-        //     } catch(isError) {
-        //         console.log(isError)
-
-        //         setForm({
-        //             title: '',
-        //             text: '',
-        //             imageUrl: 'https://images.unsplash.com/photo-1635604392842-69afcee9e0ad?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=250&ixid=MnwxfDB8MXxyYW5kb218MHx8Mnx8fHx8fDE2NDQzNjQ0MDU&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=460'
-        //         })
-        //     }
-        // }
 
         const uploadProduct = async (form, file, fileName) => {
           try {
@@ -169,33 +112,6 @@ function Newpost() {
           }
       }
 
-      // old method set posts in firebase 
-      
-      // const recipesCollectionRef = collection(db, 'posts')
-
-      // const handleSubmit = e => {
-      //   e.preventDefault();
-
-      //   if (
-      //     !form.title ||
-      //     !form.text
-      //   ) {
-      //     alert('Заполните все поля')
-      //     return
-      //   }
-    
-      //   addDoc(recipesCollectionRef, form)
-    
-      //   setForm({
-      //     title: '',
-      //     text: '',
-      //     imageUrl: ''
-      //   })
-
-      //   fetchAPI()
-
-      // }
-      
 
     return (
 <FadeIn>
@@ -206,10 +122,10 @@ function Newpost() {
           <Form.Label>Post title</Form.Label>
           <Form.Control name='title' type="text" placeholder="Введите заголовок" value={form.title} onChange={e => setForm({...form, title: e.target.value})} />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
+        {/* <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Post image</Form.Label>
           <Form.Control name='name' type="file" accept='.png, .jpg, .jpeg' ref={fileRef} onChange={(e) => setFileUpload(e.target.files)} />
-        </Form.Group>
+        </Form.Group> */}
         </Row>
         <Row>
         <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -218,23 +134,23 @@ function Newpost() {
         </Form.Group>
         </Row>
         {disabled === false ? <Button variant="primary" type="submit" disabled={disabled} >
-          Добавить статью
+          Сохранить
         </Button> :
         <Button style={{width: '149px'}} variant="primary" type="submit" disabled={disabled} >
           Загрузка...
         </Button>}
         {/* <p>Loading...</p> */}
-        <br />
+        {/* <br />
         <FormControlLabel
           label="Рандомное изображение"
           control={
             <Checkbox icon={<BookmarkBorderIcon />} checkedIcon={<BookmarkIcon />} checked={autoImage} onChange={handleChangeChecked} />
           }
-        />
+        /> */}
       </Form>
       </div>
 </FadeIn>
     );
 }
 
-export default Newpost;
+export default Updatepost;

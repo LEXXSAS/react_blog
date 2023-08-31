@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import {Card, Row, Col, Button} from 'react-bootstrap';
 import { AppContext } from '../components/context';
 import { Link } from 'react-router-dom';
@@ -19,18 +19,29 @@ import ProductCards from '../components/productCards';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import moment from 'moment'
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import infiniteScroll from 'react-infinite-scroll-component'
+// import infiniteScroll from 'react-infinite-scroll-component'
 
 
 export const Home = () => {
 
-    const {posts, removePost, loading, setLoading, products, setProducts, qLast, fetchNextData, fetchData, fetchPrevData, pageSize} = React.useContext(AppContext)
+    const {posts, removePost, loading, setLoading, products, setProducts, qLast, fetchNextData, fetchData, fetchPrevData, pageSize, fetching, loadingNew} = React.useContext(AppContext)
 
     const loadingRef = React.useRef(loading);
+    const fetchingRef = React.useRef(fetching);
+    const postsRef = React.useRef(posts);
+
 
     React.useEffect(() => {
         loadingRef.current = loading;
     }, [loading])
+
+    React.useEffect(() => {
+        fetchingRef.current = fetching;
+    }, [fetching])
+
+    React.useEffect(() => {
+        postsRef.current = posts;
+    }, [posts])
     
 
     const [isAuth, setIsAuth] = React.useState(false);
@@ -63,13 +74,16 @@ export const Home = () => {
 
     useScrollPosition("Home")
 
+    // if (fetching) {
+    //     console.log('fetching ...')
+    // }
+
     // useEffect(() => {
     //       if (window.pageYOffset > 50) {
     //         window.scrollTo(0, 0);
     //       } else {
     //       }
     //   }, []);
-
     
     const [imageUpload, setImageUpload] = useState(null);
     const [imageList, setImageList] = useState([]);
@@ -106,11 +120,14 @@ export const Home = () => {
     });
     const [disabled, setDisabled] = useState(false);
 
-
+// нужно добавить рендеринг скелетонов динамически по количеству загружаемого контента за раз равному pageSize
 return  (
     <>
     {!loading ? 
     <Row xs={1} md={2} className="g-4">
+    <MYSkeleton />
+    <MYSkeleton />
+    <MYSkeleton />
     <MYSkeleton />
     <MYSkeleton />
     <MYSkeleton />
@@ -127,7 +144,7 @@ return  (
         <Col key={post.id}>
         <FadeIn>
 
-            <Card style={{height: '490px'}}>
+            <Card style={{height: '490px'}} >
                 <Link style={{borderRadius: '6px 6px 0 0', overflow: 'hidden'}} to={`/post/${post.id}`}><LazyLoadImage style={{width: '100%', height: '250px'}} variant="top" src={post.imageUrl} /></Link>
                 <Card.Body>
                 <Card.Title className='cardtitle'>{post.title}</Card.Title>
@@ -136,19 +153,21 @@ return  (
                 </Card.Text>
                 <div className='cardbtns'>
                 <Link to={`/post/${post.id}`}><Button variant='primary'>Читать</Button></Link>
+                {isAuth && <Link to={`/updatepost/${post.id}`}><Button variant='primary' style={{marginLeft: '0.3rem'}}>Редактировать</Button></Link>}
                 {isAuth && <Button style={{marginLeft: '0.3rem'}} onClick={() => removePost(post)}>Удалить</Button>}
                 </div>
                 </Card.Body>
                 <Card.Footer className="text-muted">{moment(post.created_at.toDate()).format('DD/MM/YYYY').replaceAll('/', '.')}</Card.Footer>
             </Card>
- 
+
     </FadeIn>
     </Col>
     ))}
+                {/* {loadingNew ? <MYSkeleton />: null} */}
     </Row>}
     <div className='cardbtns' style={{textAlign: 'center', marginTop: '1rem'}}>
     {/* <button style={{textAlign: 'center', width: '120px'}} onClick={fetchPrevData}>Previous page</button> */}
-    <button  style={{textAlign: 'center', marginLeft: '0.3rem', width: '120px'}} onClick={fetchNextData}>Показать ещё</button>
+    {/* <button  style={{textAlign: 'center', marginLeft: '0.3rem', width: '120px'}} onClick={fetchNextData}>Показать ещё</button> */}
     </div>
 
     </>
