@@ -69,7 +69,7 @@ const Fullpost = () => {
                 {!load && <MYSkeletonabout/>}
                 {<Card.Img className='cardimg' style={{width: '100%', height: 'auto', borderRadius: '0', display: 'none'}} onLoad={activeLoad} variant='top' src={post.imageUrl} />}
                 {load && <Card.Img className='cardimg' style={{width: '100%', height: 'auto', borderRadius: '0', display: 'block'}} variant='top' src={post.imageUrl} />}
-                <Card.Text style={{padding: '0 1rem', paddingTop: '1rem'}} >
+                <Card.Text style={{padding: '0 1rem', paddingTop: '1rem', whiteSpace: 'pre-line'}} >
                   {post.text}
                 </Card.Text>
                 <div style={{paddingBottom: '8px'}} className='cardbtns'>

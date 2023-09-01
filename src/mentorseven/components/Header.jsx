@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 function Header() {
     // const [us, setUs] = React.useState(false)
     // const {id} = useParams();
+    
 
     const [isAuth, setIsAuth] = React.useState(false);
     let {pathname} = useLocation();
@@ -51,6 +52,21 @@ function Header() {
 
     return (
         <div className='header-small' style={{padding: '0 1.5rem'}}>
+
+                {/* <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+                />
+                <ToastContainer /> */}
+                
                 {/* <ToastContainer
                 position="top-right"
                 autoClose={2500}

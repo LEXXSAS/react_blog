@@ -13,32 +13,9 @@ import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { getFirestore, getDocs, serverTimestamp, updateDoc, DocumentData } from 'firebase/firestore'
 import {getStorage, uploadBytesResumable, ref, uploadBytes, listAll, getDownloadURL, updateMetadata} from 'firebase/storage'
 
-function Newpost() {
+function Updatepost() {
 
   const {fetchNextData, fetchData} = React.useContext(AppContext)
-    // const [userRequest, setUserRequest] = useState({
-    //     loading: false
-    // })
-
-    // const [loading, setLoading] = useState(true);
-
-    // const {loading, setLoading} = React.useContext(AppContext);
-
-    // React.useEffect(() => {
-    //     checkRef.current = loading;
-    // }, [loading])
-
-    // const [autoImage, setAutoImage] = useState(() => {
-    //   const data = localStorage.getItem("todos");
-    //   if (typeof data === 'string') {
-    //     return JSON.parse(data);
-    //   } else {
-    //     return false
-    //   }
-    // });
-    
-
-    // checkbox with localStorage
 
     const [autoImage, setAutoImage] = useState(false);
 
@@ -65,75 +42,57 @@ function Newpost() {
         imageUrl: '',
       })
 
-    //   unsplash image link example
-    //   https://images.unsplash.com/photo-1682955212632-95fc551307cc?ixid=Mnw0NDYyNzF8MHwxfHJhbmRvbXx8fHx8fHx8fDE2ODM2NDUyNDk&ixlib=rb-4.0.3&fit=crop&w=460&h=250
-
-    // unsplash axios get image from api
-
-        // let clientID = 'rGjzWznfC6EPirpykjLXPmZF_fKj6g-EwJRauPvSV70';
-        // let clientIDTwo = '9tk8OKr9wnZvXVyodmmfQwvy1O6UzHrIaGKAfnu72Cw';
-
-        // const {data,  isLoading, isError } = useQuery('response', fetchAPI )
-
-        // async function fetchAPI() {
-        //   try {
-        //     await axios.get(`https://api.unsplash.com/photos/random/?client_id=${clientID}`)
-        //     .then(response => {
-        //         let iUrl = response.data.urls.raw + "&fit=crop&w=460&h=250";
-        //         // setLoading(false)
-        //         console.log(iUrl)
-        //         setForm({
-        //             title: '',
-        //             text: '',
-        //             imageUrl: iUrl
-        //         })
-        //     })
-        //     } catch(isError) {
-        //         console.log(isError)
-
-        //         setForm({
-        //             title: '',
-        //             text: '',
-        //             imageUrl: 'https://images.unsplash.com/photo-1635604392842-69afcee9e0ad?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=250&ixid=MnwxfDB8MXxyYW5kb218MHx8Mnx8fHx8fDE2NDQzNjQ0MDU&ixlib=rb-1.2.1&q=80&utm_campaign=api-credit&utm_medium=referral&utm_source=unsplash_source&w=460'
-        //         })
-        //     }
-        // }
-
         const uploadProduct = async (form, file, fileName) => {
+
           try {
             const {title, text} = form;
         
+            // создаем ссылку на storage и путь до папки, где хранятся изображения
             const imageRef = ref(storage, `images/${fileName}`);
+            // загружаем туда файл по ссылке
             const uploadImage = await uploadBytes(imageRef, file);
         
+            // добавляем какие то мета данные
             const newMetadata = {
               cachControl: 'public,max-age=2629800000',
               contentType: uploadImage.metadata.contextType
             };
         
+            // обновляем данные файла по ссылке
             await updateMetadata(imageRef, newMetadata);
         
+            // создаем переменную в которую записываем url загруженного файла
             const publicImageUrl = await getDownloadURL(imageRef)
         
+            // создаем переменную в которую записываем все данные для firestore о тексте, файле и т.д.
             const postData = {
               imageUrl: publicImageUrl,
               title: title,
               text: text,
               created_at: serverTimestamp()
             }
-        
+
+            // добавляем созданные данные в коллекцию firestore
+            // и сохраняем ссылку на созданные данные
             const cupRef = await addDoc(collection(db, 'posts'), postData);
+            // обновляем у загруженного файла id по созданной ссылке
+            // равный пути хранения в firestore
             await updateDoc(cupRef, {id: cupRef.id});
         
             return cupRef.id;
-          } catch (error) {
+          } 
+          
+          
+          catch (error) {
             console.log(error)
           }
         }
   
       const handleSubmit = async (e) => {
+      //отменяем стандартное поведение браузера
           e.preventDefault()
 
+      //если заголовок и текст пусты выводим алерт
           if (
             !form.title ||
             !form.text
@@ -142,16 +101,25 @@ function Newpost() {
             return
           }
 
+      //ставим кнопку в disabled
           setDisabled(true);
-  
+
+      //если файл загружен в input type file, то
           if (fileUpload) {
+      //создаем ссылку на файл изображение - записываем ссылку в переменную inputFile
               const inputFile = fileRef.current;
+      //запускаем функцию uploadProduct
+      //передаем в неё данные с формы, а также имя файла и сам файл
               const res = await uploadProduct(
                   form,
                   fileUpload[0],
                   fileUpload[0].name
               );
   
+      //если переменная inputFile и
+      //функция выполнилась uploadProduct, то
+      //выводим сообщеине об успешном создании статьи и
+      //обнуляем форму ввода и все данные в исходное состояние
               if (res && inputFile) {
                   alert('Статья создана')
                   setDisabled(false);
@@ -169,33 +137,12 @@ function Newpost() {
           }
       }
 
-      // old method set posts in firebase 
+
+      // const handleSubmit = async(e) => {
+      // e.preventDefault();
       
-      // const recipesCollectionRef = collection(db, 'posts')
-
-      // const handleSubmit = e => {
-      //   e.preventDefault();
-
-      //   if (
-      //     !form.title ||
-      //     !form.text
-      //   ) {
-      //     alert('Заполните все поля')
-      //     return
-      //   }
-    
-      //   addDoc(recipesCollectionRef, form)
-    
-      //   setForm({
-      //     title: '',
-      //     text: '',
-      //     imageUrl: ''
-      //   })
-
-      //   fetchAPI()
-
       // }
-      
+
 
     return (
 <FadeIn>
@@ -217,24 +164,25 @@ function Newpost() {
           <Form.Control as="textarea" rows={7}  name='text' type="text" placeholder="Введите текст" value={form.text} onChange={e => setForm({...form, text: e.target.value})} />
         </Form.Group>
         </Row>
+        {/* <button type='submit'>Test upload</button> */}
         {disabled === false ? <Button variant="primary" type="submit" disabled={disabled} >
-          Добавить статью
+          Создать статью
         </Button> :
         <Button style={{width: '149px'}} variant="primary" type="submit" disabled={disabled} >
           Загрузка...
         </Button>}
         {/* <p>Loading...</p> */}
-        <br />
+        {/* <br />
         <FormControlLabel
           label="Рандомное изображение"
           control={
             <Checkbox icon={<BookmarkBorderIcon />} checkedIcon={<BookmarkIcon />} checked={autoImage} onChange={handleChangeChecked} />
           }
-        />
+        /> */}
       </Form>
       </div>
 </FadeIn>
     );
 }
 
-export default Newpost;
+export default Updatepost;

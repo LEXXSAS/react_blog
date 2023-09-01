@@ -14,6 +14,8 @@ import Profile from './pages/Profile';
 import Profiletest from './pages/Profiletest';
 import Newpost from './pages/Newpost';
 import Updatepost from './pages/Updatepost';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {db} from './firebase'
 import { collection, onSnapshot, doc, addDoc, deleteDoc, orderBy, query, getDocs, startAfter, limit, endBefore, endAt, limitToLast } from 'firebase/firestore'
 import {ref, deleteObject, getStorage} from 'firebase/storage'
@@ -31,6 +33,7 @@ function App() {
       const [qLast, setQLast] = useState();
       const [fetching, setFetching] = useState(false);
       const [loadingNew, setLoadingNew] = useState(false);
+      const [noty, setNoty] = useState(false);
       // const [form, setForm] = useState({
       //   title: '',
       //   text: '',
@@ -212,10 +215,43 @@ function App() {
         
       };
 
+        useEffect(() => {
+
+          const notify = () => toast.info('Статья обновлена!', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            toastId: 'success1',
+            });
+
+            if (noty) {
+              notify()
+              setNoty(false)
+            }
+
+        }, [noty])
+
     return (
-        <AppContext.Provider value={{posts, removePost, loading, setLoading, products, setProducts, qLast, fetchData, fetchNextData, fetchPrevData, pageSize, fetching, setFetching, loadingNew}} >
+        <AppContext.Provider value={{posts, removePost, loading, setLoading, products, setProducts, qLast, fetchData, fetchNextData, fetchPrevData, pageSize, fetching, setFetching, loadingNew, setNoty}} >
+                {/* <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+                />
+                <ToastContainer /> */}
         <div className='d-flex flex-column min-vh-100'>
-          
 
             <Header />
 
