@@ -153,9 +153,10 @@ return  (
                     {post.text.substr(0, 100)}...
                 </Card.Text>
                 <div className='cardbtns'>
-                <Link to={`/post/${post.id}`}><Button variant='primary'>Читать</Button></Link>
-                {isAuth && <Link to={`/updatepost/${post.id}`}><Button variant='primary' style={{marginLeft: '0.3rem'}}>Редактировать</Button></Link>}
-                {isAuth && <Button style={{marginLeft: '0.3rem'}} onClick={() => removePost(post)}>Удалить</Button>}
+                
+                <Link to={`/post/${post.id}`}><Button variant='primary'><i class="bi bi-book"></i></Button></Link>
+                {isAuth && <Link to={`/updatepost/${post.id}`}><Button variant='primary' style={{marginLeft: '0.3rem'}}><i class="bi bi-pencil-square"></i></Button></Link>}
+                {isAuth && <Button className='delbtn' style={{marginLeft: '0.3rem'}} onClick={() => removePost(post)}>Удалить<i className="bi bi-x-square" style={{marginLeft: '6px'}}></i></Button>}
                 </div>
                 </Card.Body>
                 <Card.Footer className="text-muted">{moment(post.created_at.toDate()).format('DD/MM/YYYY').replaceAll('/', '.')}</Card.Footer>

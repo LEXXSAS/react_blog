@@ -1,12 +1,80 @@
-import React, { createContext, useContext, useEffect } from 'react'
+import React, { createContext, useContext, useEffect, useRef } from 'react'
 import {Nav, Navbar, Button} from 'react-bootstrap';
 import { Link, useMatch, useParams } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import { Bounce, toast, ToastContainer } from 'react-toastify';
+// import { Bounce, toast, ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
+import Notification from './Notification';
+import toast, { Toaster } from 'react-hot-toast';
+import { AppContext } from '../components/context';
+
 
 function Header() {
+    const {notytwo, notyDelete, notyCreate} = React.useContext(AppContext)
+
+    const notify = () => toast.success('Статья обновлена', {
+        style: {
+            border: '1px solid #FF84DC',
+            padding: '16px',
+            color: '#FF84DC',
+            boxShadow: '0 5px 10px rgba(0,0,0,0.1)',
+            borderLeft: '6px solid #FF84DC'
+
+          },
+          iconTheme: {
+            primary: '#FF84DC',
+            secondary: '#FFF',
+          },
+    });
+
+
+    const notifyDeletePost = () => toast.success('Статья удалена', {
+        style: {
+            border: '1px solid #FF84DC',
+            padding: '16px',
+            color: '#FF84DC',
+            boxShadow: '0 5px 10px rgba(0,0,0,0.1)',
+            borderLeft: '6px solid #FF84DC'
+
+          },
+          iconTheme: {
+            primary: '#FF84DC',
+            secondary: '#FFF',
+          },
+    });
+
+    const notifyCreatePost = () => toast.success('Статья создана', {
+        style: {
+            border: '1px solid #FF84DC',
+            padding: '16px',
+            color: '#FF84DC',
+            boxShadow: '0 5px 10px rgba(0,0,0,0.1)',
+            borderLeft: '6px solid #FF84DC'
+
+          },
+          iconTheme: {
+            primary: '#FF84DC',
+            secondary: '#FFF',
+          },
+    });
+  
+
+        if (notytwo) {
+            notify()
+        }
+
+        if (notyDelete) {
+            notifyDeletePost()
+        }
+
+        if (notyCreate) {
+            notifyCreatePost()
+        }
+
+
+
+    
     // const [us, setUs] = React.useState(false)
     // const {id} = useParams();
     
@@ -26,6 +94,8 @@ function Header() {
     let id = pathname.split('/post/')[1]
     const pathName = pathname.replace(`${id}`, '');
 
+
+
     // function handleClick() {
     // return setUs(!false)
     // }
@@ -42,6 +112,7 @@ function Header() {
     //         theme: "dark",
     //         });
     //   }
+
       
     //   useEffect(() => {
     //     const timer = setTimeout(() => {
@@ -51,8 +122,13 @@ function Header() {
     //   }, [])
 
     return (
-        <div className='header-small' style={{padding: '0 1.5rem'}}>
 
+
+        <div className='header-small' style={{padding: '0 1.5rem'}}>
+        <Toaster
+         position="top-right"
+         reverseOrder={false}
+         />
                 {/* <ToastContainer
                 position="top-right"
                 autoClose={5000}
@@ -81,7 +157,7 @@ function Header() {
                 /> */}
             <div className='container'>
                 <div className='header'>
-
+                <Notification />
                     {/* <Navbar.Brand><Link to='/'><h2>React Blog</h2></Link></Navbar.Brand>
                     {pathName === '/post/' ?<NavDropdown title="Меню" id="basic-nav-dropdown">
                     <NavDropdown.Item to="/" as={Link}>Главная</NavDropdown.Item>

@@ -15,7 +15,7 @@ import {getStorage, uploadBytesResumable, ref, uploadBytes, listAll, getDownload
 
 function Updatepost() {
 
-  const {fetchNextData, fetchData} = React.useContext(AppContext)
+  const {fetchNextData, fetchData, notyCreate, setNotyCreate} = React.useContext(AppContext)
 
     const [autoImage, setAutoImage] = useState(false);
 
@@ -121,7 +121,8 @@ function Updatepost() {
       //выводим сообщеине об успешном создании статьи и
       //обнуляем форму ввода и все данные в исходное состояние
               if (res && inputFile) {
-                  alert('Статья создана')
+                setNotyCreate(true);
+                  // alert('Статья создана')
                   setDisabled(false);
                   setForm({
                     title: '',
@@ -136,6 +137,10 @@ function Updatepost() {
               }
           }
       }
+
+      useEffect(() => {
+        setNotyCreate(false)
+      }, [notyCreate])
 
 
       // const handleSubmit = async(e) => {

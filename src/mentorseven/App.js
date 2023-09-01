@@ -15,11 +15,11 @@ import Profiletest from './pages/Profiletest';
 import Newpost from './pages/Newpost';
 import Updatepost from './pages/Updatepost';
 import { ToastContainer, toast } from 'react-toastify';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'react-toastify/dist/ReactToastify.css';
 import {db} from './firebase'
 import { collection, onSnapshot, doc, addDoc, deleteDoc, orderBy, query, getDocs, startAfter, limit, endBefore, endAt, limitToLast } from 'firebase/firestore'
 import {ref, deleteObject, getStorage} from 'firebase/storage'
-
 
 function App() {
 
@@ -34,6 +34,11 @@ function App() {
       const [fetching, setFetching] = useState(false);
       const [loadingNew, setLoadingNew] = useState(false);
       const [noty, setNoty] = useState(false);
+      const [notytwo, setNotyTwo] = useState(false);
+      const [notyDelete, setNotyDelete] = useState(false);
+      const [notyCreate, setNotyCreate] = useState(false);
+
+      const [notifyR, setNotifyRef] = useState(false);
       // const [form, setForm] = useState({
       //   title: '',
       //   text: '',
@@ -187,6 +192,7 @@ function App() {
 
         deleteObject(imageRef).then(() => {
           console.log('Файл удалён!');
+          setNotyDelete(true);
           fetchNextData();
           fetchData();
         }).catch((error) => {
@@ -194,6 +200,10 @@ function App() {
         })
 
       }
+
+      useEffect(() => {
+        setNotyDelete(false)
+      }, [notyDelete])
 
       const [showButton, setShowButton] = useState(false);
 
@@ -218,6 +228,7 @@ function App() {
         useEffect(() => {
 
           const notify = () => toast.info('Статья обновлена!', {
+            toastId: 'success1',
             position: "top-right",
             autoClose: 5000,
             hideProgressBar: false,
@@ -226,7 +237,6 @@ function App() {
             draggable: true,
             progress: undefined,
             theme: "light",
-            toastId: 'success1',
             });
 
             if (noty) {
@@ -237,7 +247,7 @@ function App() {
         }, [noty])
 
     return (
-        <AppContext.Provider value={{posts, removePost, loading, setLoading, products, setProducts, qLast, fetchData, fetchNextData, fetchPrevData, pageSize, fetching, setFetching, loadingNew, setNoty}} >
+        <AppContext.Provider value={{posts, removePost, loading, setLoading, products, setProducts, qLast, fetchData, fetchNextData, fetchPrevData, pageSize, fetching, setFetching, loadingNew, setNoty, notifyR, setNotifyRef, notytwo, setNotyTwo, notyDelete, notyCreate, setNotyCreate}} >
                 {/* <ToastContainer
                 position="top-right"
                 autoClose={5000}
@@ -254,9 +264,9 @@ function App() {
         <div className='d-flex flex-column min-vh-100'>
 
             <Header />
-
+           
         <div className='container'>
-
+       
           <Routes>
             <Route path='/' element={<Layout />}>
               <Route path='/' element={<Home />} />

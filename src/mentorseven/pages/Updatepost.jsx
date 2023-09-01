@@ -17,7 +17,7 @@ import {getStorage, uploadBytesResumable, ref, uploadBytes, listAll, getDownload
 
 function Updatepost() {
 
-  const {fetchNextData, fetchData, posts, setNoty} = React.useContext(AppContext)
+  const {fetchNextData, fetchData, posts, setNoty, setNotifyRef, setNotyTwo, notytwo} = React.useContext(AppContext)
 
 
     let {id} = useParams();
@@ -120,6 +120,7 @@ function Updatepost() {
             await updateDoc(doc(db, 'posts', id), postData);
             console.log('update ok')
             
+            
             return true;
         
             // return cupRef.id;
@@ -143,6 +144,8 @@ function Updatepost() {
             console.log('update noimage start')
             await updateDoc(doc(db, 'posts', id), postData);
             console.log('update noimage ok')
+            setNotifyRef(true)
+
             return true;
         
             // return cupRef.id;
@@ -210,9 +213,10 @@ function Updatepost() {
       //выводим сообщеине об успешном создании статьи и
       //обнуляем форму ввода и все данные в исходное состояние
               if (res) {
-                  alert('Статья обновлена')
+                  // alert('Статья обновлена')
                   // notify()
                   console.log('update ok!')
+                  setNotyTwo(true)
                   setNoty(true);
                   setDisabled(false);
                   setForm({
@@ -231,7 +235,8 @@ function Updatepost() {
 
       useEffect(() => {
         setNoty(false);
-      }, [])
+        setNotyTwo(false)
+      }, [notytwo])
       // useEffect(() => {
       //   if (toasty) {
       //     notify()
