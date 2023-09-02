@@ -6,16 +6,13 @@ const Notification = () => {
     const {notifyR} = React.useContext(AppContext)
 
     const notifyRef = useRef(null);
-    // setNotifyR(notifyRef.current)
-    // if (notifyR) {
+
     useEffect(() => {
         if (notifyR !== null) {
             notifyRef.current.style = 'display: none'
         }
     }, [])
-    // }
-    // 
-    // console.log(notifyRef.current)
+
 
   return (
     <div ref={notifyRef} className="toasty">

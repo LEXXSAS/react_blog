@@ -6,8 +6,11 @@ import {auth} from '../../firebase'
 import FadeIn from "react-fade-in";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faEyeSlash, faEye, faEnvelope, faEnvelopeCircleCheck} from '@fortawesome/free-solid-svg-icons'
+import { AppContext } from '../components/context';
 
 const Login = () => {
+
+  const {setNotyUserAuth} = React.useContext(AppContext)
 
     const navigate = useNavigate();
 
@@ -28,6 +31,7 @@ const Login = () => {
 
         signInWithEmailAndPassword(auth, fields.email, fields.password)
         .then((userCredential) => {
+          setNotyUserAuth(userCredential)
           navigate('/profile')
           window.localStorage.setItem('token', userCredential.user.accessToken);
           window.localStorage.setItem('email', userCredential.user.email);

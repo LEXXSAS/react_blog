@@ -187,8 +187,8 @@ function Updatepost() {
       //выводим сообщеине об успешном создании статьи и
       //обнуляем форму ввода и все данные в исходное состояние
               if (res && inputFile) {
-                  alert('Статья обновлена')
-                  
+                  // alert('Статья обновлена')
+                  setNotyTwo(res)
                   setDisabled(false);
                   setForm({
                     title: '',
@@ -216,8 +216,8 @@ function Updatepost() {
                   // alert('Статья обновлена')
                   // notify()
                   console.log('update ok!')
-                  setNotyTwo(true)
-                  setNoty(true);
+                  setNotyTwo(res)
+                  setNoty(res);
                   setDisabled(false);
                   setForm({
                     title: '',
@@ -234,8 +234,8 @@ function Updatepost() {
       }
 
       useEffect(() => {
-        setNoty(false);
-        setNotyTwo(false)
+        setNoty('');
+        setNotyTwo('')
       }, [notytwo])
       // useEffect(() => {
       //   if (toasty) {
@@ -287,8 +287,8 @@ theme="light"
         {disabled === false ? <Button variant="primary" type="submit" disabled={disabled} >
           Сохранить
         </Button> :
-        <Button style={{width: '149px'}} variant="primary" type="submit" disabled={disabled} >
-          Загрузка...
+        <Button variant="primary" type="submit" disabled={disabled} >
+          Сохранить
         </Button>}
         {/* <p>Loading...</p> */}
         {/* <br />

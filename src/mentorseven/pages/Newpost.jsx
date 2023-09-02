@@ -121,7 +121,7 @@ function Updatepost() {
       //выводим сообщеине об успешном создании статьи и
       //обнуляем форму ввода и все данные в исходное состояние
               if (res && inputFile) {
-                setNotyCreate(true);
+                setNotyCreate(res);
                   // alert('Статья создана')
                   setDisabled(false);
                   setForm({
@@ -139,7 +139,7 @@ function Updatepost() {
       }
 
       useEffect(() => {
-        setNotyCreate(false)
+        setNotyCreate('')
       }, [notyCreate])
 
 

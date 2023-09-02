@@ -34,9 +34,10 @@ function App() {
       const [fetching, setFetching] = useState(false);
       const [loadingNew, setLoadingNew] = useState(false);
       const [noty, setNoty] = useState(false);
-      const [notytwo, setNotyTwo] = useState(false);
-      const [notyDelete, setNotyDelete] = useState(false);
-      const [notyCreate, setNotyCreate] = useState(false);
+      const [notytwo, setNotyTwo] = useState();
+      const [notyDelete, setNotyDelete] = useState();
+      const [notyCreate, setNotyCreate] = useState();
+      const [notyUserAuth, setNotyUserAuth] = useState();
 
       const [notifyR, setNotifyRef] = useState(false);
       // const [form, setForm] = useState({
@@ -192,7 +193,7 @@ function App() {
 
         deleteObject(imageRef).then(() => {
           console.log('Файл удалён!');
-          setNotyDelete(true);
+          setNotyDelete('delete ok');
           fetchNextData();
           fetchData();
         }).catch((error) => {
@@ -201,9 +202,9 @@ function App() {
 
       }
 
-      useEffect(() => {
-        setNotyDelete(false)
-      }, [notyDelete])
+      // useEffect(() => {
+      //   setNotyDelete(false)
+      // }, [notyDelete])
 
       const [showButton, setShowButton] = useState(false);
 
@@ -225,29 +226,29 @@ function App() {
         
       };
 
-        useEffect(() => {
+        // useEffect(() => {
 
-          const notify = () => toast.info('Статья обновлена!', {
-            toastId: 'success1',
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-            });
+        //   const notify = () => toast.info('Статья обновлена!', {
+        //     toastId: 'success1',
+        //     position: "top-right",
+        //     autoClose: 5000,
+        //     hideProgressBar: false,
+        //     closeOnClick: true,
+        //     pauseOnHover: true,
+        //     draggable: true,
+        //     progress: undefined,
+        //     theme: "light",
+        //     });
 
-            if (noty) {
-              notify()
-              setNoty(false)
-            }
+        //     if (noty) {
+        //       notify()
+        //       setNoty(false)
+        //     }
 
-        }, [noty])
+        // }, [noty])
 
     return (
-        <AppContext.Provider value={{posts, removePost, loading, setLoading, products, setProducts, qLast, fetchData, fetchNextData, fetchPrevData, pageSize, fetching, setFetching, loadingNew, setNoty, notifyR, setNotifyRef, notytwo, setNotyTwo, notyDelete, notyCreate, setNotyCreate}} >
+        <AppContext.Provider value={{posts, removePost, loading, setLoading, products, setProducts, qLast, fetchData, fetchNextData, fetchPrevData, pageSize, fetching, setFetching, loadingNew, setNoty, notifyR, setNotifyRef, notytwo, setNotyTwo, notyDelete, notyCreate, setNotyCreate, setNotyDelete, notyUserAuth, setNotyUserAuth}} >
                 {/* <ToastContainer
                 position="top-right"
                 autoClose={5000}
