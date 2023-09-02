@@ -107,7 +107,6 @@ function App() {
         
       }
 
-
       // предыдущее значение
       async function fetchPrevData() {
         
@@ -202,10 +201,6 @@ function App() {
 
       }
 
-      // useEffect(() => {
-      //   setNotyDelete(false)
-      // }, [notyDelete])
-
       const [showButton, setShowButton] = useState(false);
 
       useEffect(() => {
@@ -226,42 +221,10 @@ function App() {
         
       };
 
-        // useEffect(() => {
-
-        //   const notify = () => toast.info('Статья обновлена!', {
-        //     toastId: 'success1',
-        //     position: "top-right",
-        //     autoClose: 5000,
-        //     hideProgressBar: false,
-        //     closeOnClick: true,
-        //     pauseOnHover: true,
-        //     draggable: true,
-        //     progress: undefined,
-        //     theme: "light",
-        //     });
-
-        //     if (noty) {
-        //       notify()
-        //       setNoty(false)
-        //     }
-
-        // }, [noty])
 
     return (
         <AppContext.Provider value={{posts, removePost, loading, setLoading, products, setProducts, qLast, fetchData, fetchNextData, fetchPrevData, pageSize, fetching, setFetching, loadingNew, setNoty, notifyR, setNotifyRef, notytwo, setNotyTwo, notyDelete, notyCreate, setNotyCreate, setNotyDelete, notyUserAuth, setNotyUserAuth}} >
-                {/* <ToastContainer
-                position="top-right"
-                autoClose={5000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-                theme="light"
-                />
-                <ToastContainer /> */}
+
         <div className='d-flex flex-column min-vh-100'>
 
             <Header />
