@@ -105,7 +105,7 @@ function Updatepost() {
               imageUrl: publicImageUrl,
               title: title,
               text: text,
-              created_at: serverTimestamp()
+              // created_at: serverTimestamp()
             }
         
             // добавляем созданные данные в коллекцию firestore
@@ -137,7 +137,7 @@ function Updatepost() {
             const postData = {
               title: title,
               text: text,
-              created_at: serverTimestamp()
+              // created_at: serverTimestamp()
             }
 
             // тут сделать updateDoc по id
