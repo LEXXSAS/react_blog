@@ -12,6 +12,7 @@ import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import imageCompression from 'browser-image-compression';
 import { getFirestore, getDocs, serverTimestamp, updateDoc, DocumentData } from 'firebase/firestore'
 import {getStorage, uploadBytesResumable, ref, uploadBytes, listAll, getDownloadURL, updateMetadata} from 'firebase/storage'
 
@@ -174,14 +175,22 @@ function Updatepost() {
           if (fileUpload) {
       //создаем ссылку на файл изображение - записываем ссылку в переменную inputFile
               const inputFile = fileRef.current;
+              const imageFile = fileUpload[0];
+
+              const options = {
+                maxSizeMB: 1,
+                maxWidthOrHeight: 1908,
+                useWebWorker: true,
+              }
+
+              const compressedFile = await imageCompression(imageFile, options);
       //запускаем функцию uploadProduct
       //передаем в неё данные с формы, а также имя файла и сам файл
               const res = await uploadProduct(
                   form,
-                  fileUpload[0],
-                  fileUpload[0].name
+                  compressedFile,
+                  compressedFile.name
               );
-  
       //если переменная inputFile и
       //функция выполнилась uploadProduct, то
       //выводим сообщеине об успешном создании статьи и

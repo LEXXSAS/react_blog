@@ -10,6 +10,8 @@ import FadeIn from "react-fade-in";
 import { Checkbox, FormControlLabel } from '@mui/material';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
+import imageCompression from 'browser-image-compression';
+import Resizer from "react-image-file-resizer";
 import { getFirestore, getDocs, serverTimestamp, updateDoc, DocumentData } from 'firebase/firestore'
 import {getStorage, uploadBytesResumable, ref, uploadBytes, listAll, getDownloadURL, updateMetadata} from 'firebase/storage'
 
@@ -35,6 +37,18 @@ function Updatepost() {
     const [disabled, setDisabled] = useState(false);
 
     const [fileUpload, setFileUpload] = useState(null);
+    const [cropImage, setCropImage] = useState(null);
+    const [istrue, setTrue] = useState(false);
+
+        const loadingRef = React.useRef(istrue);
+    React.useEffect(() => {
+        loadingRef.current = istrue;
+    }, [istrue])
+
+    const cropImgRef = React.useRef(cropImage);
+    React.useEffect(() => {
+      cropImgRef.current = cropImage;
+    }, [cropImage])
 
     const [form, setForm] = useState({
         title: '',
@@ -46,13 +60,14 @@ function Updatepost() {
 
           try {
             const {title, text} = form;
-        
+            // тут начинается firebase storage
+
             // создаем ссылку на storage и путь до папки, где хранятся изображения
             const imageRef = ref(storage, `images/${fileName}`);
             // загружаем туда файл по ссылке
             const uploadImage = await uploadBytes(imageRef, file);
         
-            // добавляем какие то мета данные
+            // добавляем какие-то мета данные
             const newMetadata = {
               cachControl: 'public,max-age=2629800000',
               contentType: uploadImage.metadata.contextType
@@ -63,7 +78,8 @@ function Updatepost() {
         
             // создаем переменную в которую записываем url загруженного файла
             const publicImageUrl = await getDownloadURL(imageRef)
-        
+
+            // тут начинается firestore
             // создаем переменную в которую записываем все данные для firestore о тексте, файле и т.д.
             const postData = {
               imageUrl: publicImageUrl,
@@ -71,7 +87,6 @@ function Updatepost() {
               text: text,
               created_at: serverTimestamp()
             }
-
             // добавляем созданные данные в коллекцию firestore
             // и сохраняем ссылку на созданные данные
             const cupRef = await addDoc(collection(db, 'posts'), postData);
@@ -91,38 +106,129 @@ function Updatepost() {
       const handleSubmit = async (e) => {
       //отменяем стандартное поведение браузера
           e.preventDefault()
-
+       
       //если заголовок и текст пусты выводим алерт
-          if (
-            !form.title ||
-            !form.text
-          ) {
-            alert('Заполните все поля')
-            return
-          }
+          // if (
+          //   !form.title ||
+          //   !form.text
+          // ) {
+          //   alert('Заполните все поля')
+          //   return
+          // }
 
       //ставим кнопку в disabled
           setDisabled(true);
-
       //если файл загружен в input type file, то
           if (fileUpload) {
       //создаем ссылку на файл изображение - записываем ссылку в переменную inputFile
               const inputFile = fileRef.current;
-      //запускаем функцию uploadProduct
-      //передаем в неё данные с формы, а также имя файла и сам файл
-              const res = await uploadProduct(
+              console.log('fireRef.current && inputFile', fileRef.current)
+      // выводится FileList с двумя значениями File и length
+              console.log('fileUpload', fileUpload)
+      // в fileUpload[0] выводится объект File с параметрами
+      // size / lastModified / lastModifiedDate / name "name image" / type "image/png" / webkitRelativePath ""
+              console.log('fileUpload[0]', fileUpload[0])
+              // записываем в новую переменную для дальнейшей компрессии
+              const imageFile = fileUpload[0];
+
+              const imageType = imageFile.name.split('.')[1];
+              // получение ширины высоты изображения
+              let newwidth;
+              const reader = new FileReader();
+              reader.readAsDataURL(imageFile);
+              reader.onloadend = () => {
+                const img = new Image();
+                img.src = reader.result;
+                img.onload = () => {
+                  console.log('img width', img.width, 'img height', img.height)
+                  const ogImageRatio = img.width / img.height;
+                  console.log('ImageRatio', ogImageRatio)
+                  newwidth = Math.floor(250 * ogImageRatio);
+                  // const newheight = Math.floor(enter value width / ogImageRatio);
+                  console.log('new width if new height is 250px ==>', newwidth);
+                  
+                  // const canvas = document.createElement('canvas');
+                  // const maxSize = Math.max(img.width, img.height);
+                  // canvas.width = maxSize;
+                  // canvas.height = maxSize;
+                  // const ctx = canvas.getContext('2d');
+                  // ctx.drawImage(
+                  //   img,
+                  //   newwidth,
+                  //   250
+                  // );
+                  // canvas.toBlob((blob) => {
+                  //   const file = new File([blob], imageFile.name, {
+                  //     type: `image/${imageType}`,
+                  //     lastModified: Date.now(),
+                  //   });
+                  //   console.log('new img file', file);
+                  //   setCropImage(file);
+                  // })
+                }
+              }
+
+              const resizeFile = (file) =>
+              new Promise((resolve) => {
+                Resizer.imageFileResizer(
+                  file,
+                  newwidth,
+                  250,
+                  "JPEG",
+                  100,
+                  0,
+                  (uri) => {
+                    resolve(uri);
+                  },
+                  "base64"
+                );
+              });
+
+              const image = await resizeFile(imageFile);
+              const file = new File([image], imageFile.name, {
+                type: `image/${imageType}`,
+                lastModified: Date.now(),
+              });
+              console.log('new resize image', file)
+
+              // console.log('originalFile instanceof Blob', imageFile instanceof Blob);
+              // выводим размер оригинального файла
+              console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
+              // console.log(`new resize image size ${file.size / 1024 / 1024} MB`);
+              
+              // опции компрессии
+              const options = {
+                maxSizeMB: 1,
+                maxWidthOrHeight: 1908,
+                useWebWorker: true,
+              }
+              
+              try {
+                // компрессирование файла с опциями
+                // const compressedFile = await imageCompression(loadingRef.current, options);
+                // const compressedFile = await imageCompression(imageFile, options);
+                const compressedFile = await imageCompression(imageFile, options);
+                // выводим размер скомпрессированного файла
+                // console.log('compressedFile instanceof Blob', compressedFile instanceof Blob);
+                console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`);
+                //запускаем функцию uploadProduct
+                //передаем в неё данные с формы, а также имя файла и сам файл
+                // const res = await uploadProduct(
+                //     form,
+                //     fileUpload[0],
+                //     fileUpload[0].name
+                // );
+                const res = await uploadProduct(
                   form,
-                  fileUpload[0],
-                  fileUpload[0].name
-              );
-  
-      //если переменная inputFile и
-      //функция выполнилась uploadProduct, то
+                  compressedFile,
+                  compressedFile.name
+                );
+      //если переменная inputFile не пуста и
+      //функция uploadProduct выполнилась, то
       //выводим сообщеине об успешном создании статьи и
       //обнуляем форму ввода и все данные в исходное состояние
               if (res && inputFile) {
                 setNotyCreate(res);
-                  // alert('Статья создана')
                   setDisabled(false);
                   setForm({
                     title: '',
@@ -132,9 +238,13 @@ function Updatepost() {
                   setFileUpload(null);
                   fetchNextData();
                   fetchData();
-  
+
                   inputFile.value = '';
               }
+              } catch (error) {
+                alert('Загрузка не удалась')
+              }
+
           }
       }
 
@@ -148,6 +258,11 @@ function Updatepost() {
       
       // }
 
+      // useEffect(() => {
+      //   if (cropImage !== null) {
+      //     console.log(`cropImage size ${cropImage.size / 1024 / 1024} MB`);
+      //   }
+      // }, [cropImage])
 
     return (
 <FadeIn>

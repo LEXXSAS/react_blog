@@ -50,7 +50,8 @@ const Profile = () => {
       <h2>Вы авторизованы!</h2>
       <div style={{marginBottom: '1rem'}}>
       </div>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel amet voluptate quos minus odio quam, vitae assumenda ullam. Molestias, harum iure quisquam natus nihil vitae aut tenetur mollitia doloremque maiores!</p>
+      <p></p>
+      {/* <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel amet voluptate quos minus odio quam, vitae assumenda ullam. Molestias, harum iure quisquam natus nihil vitae aut tenetur mollitia doloremque maiores!</p> */}
       <p>{`Рады тебя видеть ${name.email.split('@')[0]}`}</p>
       <Button onClick={userSignOut}>Выйти</Button>
       </div>
