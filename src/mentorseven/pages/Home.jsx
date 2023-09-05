@@ -145,8 +145,8 @@ return  (
         <FadeIn>
 
             <Card style={{height: '490px'}} >
-                <Link style={{borderRadius: '6px 6px 0 0', overflow: 'hidden'}} to={`/post/${post.id}`}><Card.Img style={{width: '100%', height: '250px'}} variant="top" src={post.imageUrl} /></Link>
-                {/* <Link style={{borderRadius: '6px 6px 0 0', overflow: 'hidden'}} to={`/post/${post.id}`}><LazyLoadImage style={{width: '100%', height: '250px'}} variant="top" src={post.imageUrl} /></Link> */}
+                {/* <Link style={{borderRadius: '6px 6px 0 0', overflow: 'hidden'}} to={`/post/${post.id}`}><Card.Img style={{width: '100%', height: '250px'}} variant="top" src={post.imageUrl} /></Link> */}
+                <Link style={{borderRadius: '6px 6px 0 0', overflow: 'hidden'}} to={`/post/${post.id}`}><LazyLoadImage style={{width: '100%', height: '250px'}} variant="top" src={post.imageUrl} /></Link>
                 <Card.Body>
                 <Card.Title className='cardtitle'>{post.title}</Card.Title>
                 <Card.Text>

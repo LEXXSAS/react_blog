@@ -143,7 +143,8 @@ function Updatepost() {
                   console.log('img width', img.width, 'img height', img.height)
                   const ogImageRatio = img.width / img.height;
                   console.log('ImageRatio', ogImageRatio)
-                  newwidth = Math.floor(250 * ogImageRatio);
+                  // newwidth = Math.floor(250 * ogImageRatio);
+                  newwidth = Math.floor(1376 * ogImageRatio);
                   // const newheight = Math.floor(enter value width / ogImageRatio);
                   console.log('new width if new height is 250px ==>', newwidth);
                   
@@ -173,23 +174,40 @@ function Updatepost() {
                 Resizer.imageFileResizer(
                   file,
                   newwidth,
-                  250,
-                  "JPEG",
+                  1376,
+                  `${imageType}`,
                   100,
                   0,
                   (uri) => {
                     resolve(uri);
                   },
-                  "base64"
+                  "base64",
+                  // 400,
+                  // 500
                 );
               });
 
               const image = await resizeFile(imageFile);
-              const file = new File([image], imageFile.name, {
-                type: `image/${imageType}`,
-                lastModified: Date.now(),
-              });
-              console.log('new resize image', file)
+
+              const dataURIToBlob = (dataURI) => {
+                const splitDataURI = dataURI.split(",");
+                const byteString =
+                  splitDataURI[0].indexOf("base64") >= 0
+                    ? atob(splitDataURI[1])
+                    : decodeURI(splitDataURI[1]);
+                const mimeString = splitDataURI[0].split(":")[1].split(";")[0];
+              
+                const ia = new Uint8Array(byteString.length);
+                for (let i = 0; i < byteString.length; i++) ia[i] = byteString.charCodeAt(i);
+              
+                return new Blob([ia], { type: mimeString });
+              };
+              const newFile = dataURIToBlob(image);
+              // const file = new File([image], imageFile.name, {
+              //   type: `image/${imageType}`,
+              //   lastModified: Date.now(),
+              // });
+              // console.log('new resize image', file)
 
               // console.log('originalFile instanceof Blob', imageFile instanceof Blob);
               // выводим размер оригинального файла
@@ -207,7 +225,7 @@ function Updatepost() {
                 // компрессирование файла с опциями
                 // const compressedFile = await imageCompression(loadingRef.current, options);
                 // const compressedFile = await imageCompression(imageFile, options);
-                const compressedFile = await imageCompression(imageFile, options);
+                const compressedFile = await imageCompression(newFile, options);
                 // выводим размер скомпрессированного файла
                 // console.log('compressedFile instanceof Blob', compressedFile instanceof Blob);
                 console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`);
@@ -221,7 +239,7 @@ function Updatepost() {
                 const res = await uploadProduct(
                   form,
                   compressedFile,
-                  compressedFile.name
+                  fileUpload[0].name
                 );
       //если переменная inputFile не пуста и
       //функция uploadProduct выполнилась, то
