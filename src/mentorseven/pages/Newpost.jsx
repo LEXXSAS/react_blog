@@ -187,22 +187,24 @@ function Updatepost() {
                 );
               });
 
-              const image = await resizeFile(imageFile);
+              // резайзим файл изображения
+              // const image = await resizeFile(imageFile);
+              // конвертируем из base64 в blob
+              // const dataURIToBlob = (dataURI) => {
+              //   const splitDataURI = dataURI.split(",");
+              //   const byteString =
+              //     splitDataURI[0].indexOf("base64") >= 0
+              //       ? atob(splitDataURI[1])
+              //       : decodeURI(splitDataURI[1]);
+              //   const mimeString = splitDataURI[0].split(":")[1].split(";")[0];
+              
+              //   const ia = new Uint8Array(byteString.length);
+              //   for (let i = 0; i < byteString.length; i++) ia[i] = byteString.charCodeAt(i);
+              
+              //   return new Blob([ia], { type: mimeString });
+              // };
+              // const newFile = dataURIToBlob(image);
 
-              const dataURIToBlob = (dataURI) => {
-                const splitDataURI = dataURI.split(",");
-                const byteString =
-                  splitDataURI[0].indexOf("base64") >= 0
-                    ? atob(splitDataURI[1])
-                    : decodeURI(splitDataURI[1]);
-                const mimeString = splitDataURI[0].split(":")[1].split(";")[0];
-              
-                const ia = new Uint8Array(byteString.length);
-                for (let i = 0; i < byteString.length; i++) ia[i] = byteString.charCodeAt(i);
-              
-                return new Blob([ia], { type: mimeString });
-              };
-              const newFile = dataURIToBlob(image);
               // const file = new File([image], imageFile.name, {
               //   type: `image/${imageType}`,
               //   lastModified: Date.now(),
@@ -210,8 +212,10 @@ function Updatepost() {
               // console.log('new resize image', file)
 
               // console.log('originalFile instanceof Blob', imageFile instanceof Blob);
+
               // выводим размер оригинального файла
               console.log(`originalFile size ${imageFile.size / 1024 / 1024} MB`);
+
               // console.log(`new resize image size ${file.size / 1024 / 1024} MB`);
               
               // опции компрессии
@@ -224,8 +228,8 @@ function Updatepost() {
               try {
                 // компрессирование файла с опциями
                 // const compressedFile = await imageCompression(loadingRef.current, options);
-                // const compressedFile = await imageCompression(imageFile, options);
-                const compressedFile = await imageCompression(newFile, options);
+                const compressedFile = await imageCompression(imageFile, options);
+                // const compressedFile = await imageCompression(newFile, options);
                 // выводим размер скомпрессированного файла
                 // console.log('compressedFile instanceof Blob', compressedFile instanceof Blob);
                 console.log(`compressedFile size ${compressedFile.size / 1024 / 1024} MB`);

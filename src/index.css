@@ -4,6 +4,8 @@
     box-sizing: border-box;
 } */
 
+
+
 :root {
     --toastify-color-info: #ffc107 !important;
     --toastify-color-success: #ffc107 !important;
@@ -29,6 +31,21 @@ img {
     object-fit: cover;
     object-position: top;
 }
+
+/* .img__important {
+    object-fit: cover;
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    height: 100%;
+}
+.card__important {
+    position: relative;
+    overflow: hidden;
+    padding: 0 0 0 0;
+    margin: 0;
+} */
 
 /* .card-img, .card-img-bottom, .card-img-top {
     width: 100%;
