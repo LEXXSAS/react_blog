@@ -245,6 +245,7 @@ function Updatepost() {
                   compressedFile,
                   fileUpload[0].name
                 );
+                
       //если переменная inputFile не пуста и
       //функция uploadProduct выполнилась, то
       //выводим сообщеине об успешном создании статьи и
