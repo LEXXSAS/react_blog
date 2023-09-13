@@ -8,17 +8,16 @@ import Fullpost from './pages/Fullpost';
 import Footer from './pages/Footer';
 import Layout from './components/Layout';
 import { AppContext } from './components/context';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
 import Profiletest from './pages/Profiletest';
 import Newpost from './pages/Newpost';
 import Updatepost from './pages/Updatepost';
-import { ToastContainer, toast } from 'react-toastify';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'react-toastify/dist/ReactToastify.css';
 import {db} from './firebase'
-import { collection, onSnapshot, doc, addDoc, deleteDoc, orderBy, query, getDocs, startAfter, limit, endBefore, endAt, limitToLast } from 'firebase/firestore'
+import { collection, onSnapshot, doc, deleteDoc, orderBy, query, getDocs, startAfter, limit, endBefore, limitToLast } from 'firebase/firestore'
 import {ref, deleteObject, getStorage} from 'firebase/storage'
 
 function App() {
@@ -40,22 +39,18 @@ function App() {
       const [notyUserAuth, setNotyUserAuth] = useState();
 
       const [notifyR, setNotifyRef] = useState(false);
-      // const [form, setForm] = useState({
-      //   title: '',
-      //   text: '',
-      //   imageUrl: '',
-      // })
+
+      let location = useLocation();
 
       // количество загружаемых элементов
       let pageSize = 6;
       
       const postsRef = collection(db, 'posts')
       // const first = query(recipesCollectionRef, orderBy('created_at', 'desc'), limit(9))
-      // const q = query(recipesCollectionRef, orderBy('created_at', 'desc'), limit(9))
 
-      // значение при загрузке страницы - первые нескоьлко элементов равных limit(number)
+      // значение при загрузке страницы - нескоьлко элементов равных limit(number)
       async function fetchData() {
-        // setFetching(true)
+
         const first = query(postsRef, orderBy('created_at', 'desc'), limit(pageSize));
         const response = await getDocs(first);
         setLoading(true);
@@ -67,17 +62,15 @@ function App() {
 
         const lastVisible = response.docs[response.docs.length - 1];
         setQTwo(lastVisible)
-        // const lastVisible2 = response.docs[0];
-        // setQThree(lastVisible2)
-        // setFetching(false)
+
         console.log('first docs map data', firstVisible);
         console.log("last docs id", lastVisible);
-
         console.log('posts', firstVisible)
       }
 
       // следующее значение
       async function fetchNextData() {
+
         const next = query(postsRef, orderBy('created_at', 'desc'), startAfter(qTwo || 0), limit(pageSize));
         const responseNext = await getDocs(next);
         setLoadingNew(true);
@@ -131,12 +124,10 @@ function App() {
 
         else  {
           console.log('prev button test ok - data is empty')
-          
+          // setFetching(false);
         }
         
       }
-
-      //endBefore()
 
       useEffect(() => {
         fetchData();
@@ -152,36 +143,20 @@ function App() {
       }, [])
 
       const scrollHandler = (e) => {
-        // if (e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight) < 100)
         const documentRect = document.documentElement.getBoundingClientRect();
         if (documentRect.bottom < document.documentElement.clientHeight + 150) {
           setFetching(true);
           setLoadingNew(false)
-          
         } else {
           setFetching(false);
         }
       }
 
       useEffect(() => {
-        if (fetching) {
+        if (fetching && (location.pathname === '/')) {
           fetchNextData()
         }
       }, [fetching])
-
-      // useEffect(() => {
-      //     onSnapshot(q, snapshot => {
-      //     setLoading(true);
-      //     setPosts(snapshot.docs.map(doc => {
-      //       return {
-      //         id: doc.id,
-      //         viewing: false,
-      //         ...doc.data()
-      //       }
-      //   }))
-      // })
-      // }, [])
-
 
      const storage = getStorage();
 
@@ -220,6 +195,19 @@ function App() {
         });
         
       };
+
+      // useEffect(() => {
+      //     onSnapshot(q, snapshot => {
+      //     setLoading(true);
+      //     setPosts(snapshot.docs.map(doc => {
+      //       return {
+      //         id: doc.id,
+      //         viewing: false,
+      //         ...doc.data()
+      //       }
+      //   }))
+      // })
+      // }, [])
 
 
     return (

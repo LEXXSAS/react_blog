@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import {Form, Button, Row} from 'react-bootstrap'
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import {storage, db} from '../firebase'
 import { collection, onSnapshot, doc, addDoc, deleteDoc, orderBy, query } from 'firebase/firestore'
-import {QueryClient, QueryClientProvider, useQuery} from 'react-query'
 import { AppContext } from '../components/context';
 import FadeIn from "react-fade-in";
-import { Checkbox, FormControlLabel } from '@mui/material';
-import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import BookmarkIcon from '@mui/icons-material/Bookmark';
 import imageCompression from 'browser-image-compression';
 import Resizer from "react-image-file-resizer";
 import { getFirestore, getDocs, serverTimestamp, updateDoc, DocumentData } from 'firebase/firestore'
 import {getStorage, uploadBytesResumable, ref, uploadBytes, listAll, getDownloadURL, updateMetadata} from 'firebase/storage'
+// import axios from 'axios';
+// import { useNavigate } from 'react-router-dom';
+// import {QueryClient, QueryClientProvider, useQuery} from 'react-query'
+// import { Checkbox, FormControlLabel } from '@mui/material';
+// import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+// import BookmarkIcon from '@mui/icons-material/Bookmark';
 
 function Updatepost() {
 
@@ -30,7 +30,6 @@ function Updatepost() {
       const data = window.localStorage.getItem('autoImage') === 'true';
       setAutoImage(data)
     }, [])
-
 
     const fileRef = React.useRef(null)
 
@@ -278,7 +277,6 @@ function Updatepost() {
 
       // const handleSubmit = async(e) => {
       // e.preventDefault();
-      
       // }
 
       // useEffect(() => {

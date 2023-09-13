@@ -1,25 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import {Form, Button, Row} from 'react-bootstrap'
 import { useNavigate, useParams } from 'react-router-dom';
-import axios from 'axios';
 import {storage, db} from '../firebase'
 import { collection, onSnapshot, doc, addDoc, deleteDoc, orderBy, query } from 'firebase/firestore'
-import {QueryClient, QueryClientProvider, useQuery} from 'react-query'
 import { AppContext } from '../components/context';
 import FadeIn from "react-fade-in";
-import { Checkbox, FormControlLabel } from '@mui/material';
-import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import BookmarkIcon from '@mui/icons-material/Bookmark';
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import imageCompression from 'browser-image-compression';
 import { getFirestore, getDocs, serverTimestamp, updateDoc, DocumentData } from 'firebase/firestore'
 import {getStorage, uploadBytesResumable, ref, uploadBytes, listAll, getDownloadURL, updateMetadata} from 'firebase/storage'
+// import axios from 'axios';
+// import {QueryClient, QueryClientProvider, useQuery} from 'react-query'
+// import { Checkbox, FormControlLabel } from '@mui/material';
+// import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+// import BookmarkIcon from '@mui/icons-material/Bookmark';
+// import { ToastContainer, toast } from 'react-toastify';
 
 function Updatepost() {
 
   const {fetchNextData, fetchData, posts, setNoty, setNotifyRef, setNotyTwo, notytwo} = React.useContext(AppContext)
-
 
     let {id} = useParams();
 
@@ -67,8 +66,6 @@ function Updatepost() {
         // imageUrl: '',
       })
 
-
-
       useEffect(() => {
         if ((posts.find((obj) => obj.id === (id))) !== undefined) {
           const post = posts.find((obj) => obj.id === (id));
@@ -77,11 +74,10 @@ function Updatepost() {
           setForm({...form, text: post.text, title: post.title})
         }
       }, [posts])
-        // 
-   
 
         const uploadProduct = async (form, file, fileName) => {
           try {
+
             const {title, text} = form;
         
             // создаем ссылку на storage и путь до папки, где хранятся изображения
@@ -120,7 +116,6 @@ function Updatepost() {
             console.log('update start')
             await updateDoc(doc(db, 'posts', id), postData);
             console.log('update ok')
-            
             
             return true;
         
@@ -235,81 +230,103 @@ function Updatepost() {
                   setFileUpload(null);
                   fetchNextData();
                   fetchData();
-                  
-
               }
           }
-          
       }
-
       useEffect(() => {
         setNoty('');
         setNotyTwo('')
       }, [notytwo])
+
       // useEffect(() => {
       //   if (toasty) {
       //     notify()
       //     setToasty(false);
       //   }
-
       // }, [toasty])
-
       // const handleSubmit = async(e) => {
       // e.preventDefault();
-      
       // }
 
-
     return (
-<FadeIn>
-{/* <ToastContainer
-position="top-right"
-autoClose={5000}
-hideProgressBar={false}
-newestOnTop={false}
-closeOnClick
-rtl={false}
-pauseOnFocusLoss
-draggable
-pauseOnHover
-theme="light"
-/>
-<ToastContainer /> */}
+    <FadeIn>
+
+      {/* <ToastContainer
+      position="top-right"
+      autoClose={5000}
+      hideProgressBar={false}
+      newestOnTop={false}
+      closeOnClick
+      rtl={false}
+      pauseOnFocusLoss
+      draggable
+      pauseOnHover
+      theme="light"
+      />
+      <ToastContainer /> */}
+
       <div className='full-login'>
-      <Form onSubmit={handleSubmit} style={{maxWidth: '350px', margin: '0 auto'}} className='container'>
+        <Form
+        onSubmit={handleSubmit}
+        style={{maxWidth: '350px', margin: '0 auto'}}
+        className='container'>
           <Row>
-        <Form.Group className="mb-2" controlId="formBasicEmail">
-          <Form.Label>Post title</Form.Label>
-          <Form.Control name='title' type="text" placeholder="Введите заголовок" value={form.title} onChange={e => setForm({...form, title: e.target.value})} />
-        </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Post image (необязательное поле)</Form.Label>
-          <Form.Control name='name' type="file" accept='.png, .jpg, .jpeg' ref={fileRef} onChange={(e) => setFileUpload(e.target.files)} />
-        </Form.Group>
-        </Row>
-        <Row>
-        <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Post text</Form.Label>
-          <Form.Control as="textarea" rows={7}  name='text' type="text" placeholder="Введите текст" value={form.text} onChange={e => setForm({...form, text: e.target.value})} />
-        </Form.Group>
-        </Row>
-        {disabled === false ? <Button variant="primary" type="submit" disabled={disabled} >
-          Сохранить
-        </Button> :
-        <Button variant="primary" type="submit" disabled={disabled} >
-          Сохранить
-        </Button>}
-        {/* <p>Loading...</p> */}
-        {/* <br />
-        <FormControlLabel
-          label="Рандомное изображение"
-          control={
-            <Checkbox icon={<BookmarkBorderIcon />} checkedIcon={<BookmarkIcon />} checked={autoImage} onChange={handleChangeChecked} />
-          }
-        /> */}
-      </Form>
+          <Form.Group
+          className="mb-2" controlId="formBasicEmail">
+            <Form.Label>
+              Post title
+            </Form.Label>
+            <Form.Control
+            name='title' type="text" placeholder="Введите заголовок" value={form.title} onChange={e => setForm({...form, title: e.target.value})} 
+            />
+          </Form.Group>
+          <Form.Group
+          className="mb-3" controlId="formBasicEmail">
+            <Form.Label>
+              Post image (необязательное поле)
+            </Form.Label>
+            <Form.Control
+            name='name' type="file" accept='.png, .jpg, .jpeg'
+            ref={fileRef}
+            onChange={(e) => setFileUpload(e.target.files)}
+            />
+          </Form.Group>
+          </Row>
+          <Row>
+          <Form.Group
+          className="mb-3" controlId="formBasicPassword">
+            <Form.Label>
+              Post text
+            </Form.Label>
+            <Form.Control
+            as="textarea" rows={7}  name='text' type="text" placeholder="Введите текст"
+            value={form.text}
+            onChange={e => setForm({...form, text: e.target.value})}
+            />
+          </Form.Group>
+          </Row>
+          {disabled === false ?
+          <Button variant="primary" type="submit"
+          disabled={disabled}
+          >
+            Сохранить
+          </Button> :
+          <Button variant="primary" type="submit"
+          disabled={disabled}
+          >
+            Сохранить
+          </Button>}
+          {/* <p>Loading...</p> */}
+          {/* <br />
+          <FormControlLabel
+            label="Рандомное изображение"
+            control={
+              <Checkbox icon={<BookmarkBorderIcon />} checkedIcon={<BookmarkIcon />} checked={autoImage} onChange={handleChangeChecked} />
+            }
+          /> */}
+        </Form>
       </div>
-</FadeIn>
+    </FadeIn>
     );
 }
 

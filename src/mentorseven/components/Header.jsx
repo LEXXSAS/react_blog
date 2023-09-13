@@ -257,24 +257,97 @@ function Header() {
                         <Nav.Link disabled active={pathname === '/newpost'} to='/newpost' as={Link}>Создать</Nav.Link>}
                     </Nav> : null} */}
 
-                    <Navbar.Brand><Link to='/'><h2>React <span style={{color: '#ffaa0cbd'}}>Blog</span></h2></Link></Navbar.Brand>
-                    <NavDropdown title="Меню" id="basic-nav-dropdown">
-                    <NavDropdown.Item to="/" as={Link}>Главная</NavDropdown.Item>
-                    <NavDropdown.Item to='/about' as={Link}>Обо мне</NavDropdown.Item>
-                    {isAuth ? <NavDropdown.Item to='/profile' as={Link}>Профиль</NavDropdown.Item> :
-                    <NavDropdown.Item to='/login' as={Link}>Войти</NavDropdown.Item>}
-                    {isAuth ? <NavDropdown.Item to='/newpost' as={Link}>Создать</NavDropdown.Item> :
-                    <NavDropdown.Item disabled to='/newpost' as={Link}>Создать</NavDropdown.Item>}
+                    <Navbar.Brand>
+                        <Link
+                        to='/'>
+                            <h2>React
+                            <span style={{color: '#ffaa0cbd'}}>
+                                Blog
+                            </span>
+                            </h2>
+                        </Link>
+                    </Navbar.Brand>
+                    <NavDropdown
+                    title="Меню" id="basic-nav-dropdown">
+                    <NavDropdown.Item
+                    to="/"
+                    as={Link}>
+                        Главная
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                    to='/about'
+                    as={Link}>
+                        Обо мне
+                    </NavDropdown.Item>
+                    {isAuth ?
+                    <NavDropdown.Item
+                    to='/profile'
+                    as={Link}>
+                        Профиль
+                    </NavDropdown.Item>
+                    :
+                    <NavDropdown.Item
+                    to='/login'
+                    as={Link}>
+                        Войти
+                    </NavDropdown.Item>}
+                    {isAuth ?
+                    <NavDropdown.Item
+                    to='/newpost'
+                    as={Link}>
+                        Создать
+                    </NavDropdown.Item>
+                    :
+                    <NavDropdown.Item
+                    disabled
+                    to='/newpost'
+                    as={Link}>
+                        Создать
+                    </NavDropdown.Item>}
                     </NavDropdown>
-                    {pathName === '/post/' ? <NavDropdown className='mobilemenunone' style={{display: 'block'}} title="Меню" id="basic-nav-dropdown">
-                    <NavDropdown.Item to="/" as={Link}>Главная</NavDropdown.Item>
-                    <NavDropdown.Item to='/about' as={Link}>Обо мне</NavDropdown.Item>
-                    {isAuth ? <NavDropdown.Item to='/profile' as={Link}>Профиль</NavDropdown.Item> :
-                    <NavDropdown.Item to='/login' as={Link}>Войти</NavDropdown.Item>}
-                    {isAuth ? <NavDropdown.Item to='/newpost' as={Link}>Создать</NavDropdown.Item> :
-                    <NavDropdown.Item disabled to='/newpost' as={Link}>Создать</NavDropdown.Item>}
-                    </NavDropdown> : null}
-                    {pathName !== '/post/' ? <Nav variant="pills" >
+                    {pathName === '/post/' ?
+                    <NavDropdown
+                    className='mobilemenunone' style={{display: 'block'}}
+                    title="Меню" id="basic-nav-dropdown">
+                    <NavDropdown.Item
+                    to="/"
+                    as={Link}>
+                        Главная
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                    to='/about'
+                    as={Link}>
+                        Обо мне
+                    </NavDropdown.Item>
+                    {isAuth ?
+                    <NavDropdown.Item
+                    to='/profile'
+                    as={Link}>
+                        Профиль
+                    </NavDropdown.Item>
+                    :
+                    <NavDropdown.Item
+                    to='/login'
+                    as={Link}>
+                        Войти
+                    </NavDropdown.Item>}
+                    {isAuth ?
+                    <NavDropdown.Item
+                    to='/newpost'
+                    as={Link}>
+                        Создать
+                    </NavDropdown.Item>
+                    :
+                    <NavDropdown.Item
+                    disabled
+                    to='/newpost'
+                    as={Link}>
+                        Создать
+                    </NavDropdown.Item>}
+                    </NavDropdown>
+                    : null}
+                    {pathName !== '/post/' ?
+                    <Nav variant="pills" >
                         <Nav.Link active={pathname === '/'} to="/" as={Link}>Главная</Nav.Link>
                         <Nav.Link active={pathname === '/about'} to='/about' as={Link}>Обо мне</Nav.Link>
                         {isAuth ? <Nav.Link active={pathname === '/profile'} to='/profile' as={Link}>Профиль</Nav.Link> : 

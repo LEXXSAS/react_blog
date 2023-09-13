@@ -46,7 +46,7 @@ const Profile = () => {
     <FadeIn>
     <div>
        <div>
-      <div className="full-post">
+      <div className="full-post" style={{backgroundColor: '#fff', width: '100%'}}>
       <h2>Вы авторизованы!</h2>
       <div style={{marginBottom: '1rem'}}>
       </div>
