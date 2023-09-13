@@ -15,7 +15,7 @@ function About() {
 
     return (
 <FadeIn>
-            <div className="full-post" style={{padding: 0}}>
+            <div className="full-post" style={{padding: 0, width: '100%'}}>
             
             {/* <h2>Станица об авторе блога</h2> */}
             {/* <div style={{marginBottom: '1rem'}}>
