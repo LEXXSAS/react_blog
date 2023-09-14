@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/react_blog/static/css/main.ec19a008.css",
-    "main.js": "/react_blog/static/js/main.f26e1800.js",
+    "main.css": "/react_blog/static/css/main.dc074ce6.css",
+    "main.js": "/react_blog/static/js/main.07ac3398.js",
     "static/media/about_img.jpg": "/react_blog/static/media/about_img.79ad08d7ebef77005e46.jpg",
     "static/media/bootstrap-icons.woff?": "/react_blog/static/media/bootstrap-icons.4753c5ba57962b4d7bf8.woff",
     "static/media/bootstrap-icons.woff2?": "/react_blog/static/media/bootstrap-icons.6d63d0501e5ed7b79dab.woff2",
     "index.html": "/react_blog/index.html",
-    "main.ec19a008.css.map": "/react_blog/static/css/main.ec19a008.css.map",
-    "main.f26e1800.js.map": "/react_blog/static/js/main.f26e1800.js.map"
+    "main.dc074ce6.css.map": "/react_blog/static/css/main.dc074ce6.css.map",
+    "main.07ac3398.js.map": "/react_blog/static/js/main.07ac3398.js.map"
   },
   "entrypoints": [
-    "static/css/main.ec19a008.css",
-    "static/js/main.f26e1800.js"
+    "static/css/main.dc074ce6.css",
+    "static/js/main.07ac3398.js"
   ]
 }
