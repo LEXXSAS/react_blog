@@ -21,7 +21,7 @@ import moment from 'moment'
 // import infiniteScroll from 'react-infinite-scroll-component'
 
 export const Home = () => {
-    const {posts, removePost, loading, fetching} = React.useContext(AppContext)
+    const {posts, removePost, loading, fetching, searchPost, fetchNextData} = React.useContext(AppContext)
 
     const loadingRef = React.useRef(loading);
     const fetchingRef = React.useRef(fetching);
@@ -40,6 +40,8 @@ export const Home = () => {
     }, [posts])
 
     const [isAuth, setIsAuth] = React.useState(false);
+
+    const [newArray, setNewArray] = React.useState([]);
 
     React.useEffect(() => {
         if (window.localStorage.getItem('email') === 'alex.s.86@mail.ru') {
@@ -105,6 +107,14 @@ export const Home = () => {
         })
     }, [])
 
+    useEffect(() => {
+        if(searchPost.length !== 0) {
+            setNewArray(searchPost)
+        } else {
+            setNewArray(posts)
+        }
+    }, [posts, searchPost])
+
 // new method loading and set images in firebase & firestore
     const fileRef = React.useRef(null)
     const [fileUpload, setFileUpload] = useState(null);
@@ -112,7 +122,7 @@ export const Home = () => {
         title: '',
     });
     const [disabled, setDisabled] = useState(false);
-
+    // console.log(searchPost.length)
 // нужно добавить рендеринг скелетонов динамически по количеству загружаемого контента за раз равному pageSize
 return  (
     <>
@@ -127,7 +137,7 @@ return  (
     </Row>
     : 
     <Row xs={1} md={2} className="g-4">
-    {posts.map((post, index) => (
+    {newArray.map((post, index) => (
     <Col key={post.id}>
     <FadeIn>
     <Card style={{height: '490px'}} >
@@ -137,11 +147,6 @@ return  (
             src={post.imageUrl}
             />
         </Link>
-        {/* <Link style={{borderRadius: '6px 6px 0 0', overflow: 'hidden'}}
-        to={`/post/${post.id}`}>
-        <LazyLoadImage style={{width: '100%', height: '250px'}} variant="top"
-        src={post.imageUrl} />
-        </Link> */}
         <Card.Body>
             <Card.Title
                 className='cardtitle'>
@@ -177,7 +182,6 @@ return  (
     </FadeIn>
     </Col>
     ))}
-    {/* {loadingNew ? <MYSkeleton />: null} */}
     </Row>}
     <div className='cardbtns' style={{textAlign: 'center', marginTop: '1rem'}}>
     {/* <button style={{textAlign: 'center', width: '120px'}} onClick={fetchPrevData}>Previous page</button> */}

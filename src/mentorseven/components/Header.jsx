@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 // import toast, { Toaster } from 'react-hot-toast';
 import { ToastContainer, toast } from 'react-toastify';
 import { AppContext } from '../components/context';
+import SearchForm from './SearchForm';
 
 
 function Header() {
@@ -164,6 +165,9 @@ function Header() {
 
     const [isAuth, setIsAuth] = React.useState(false);
     let {pathname} = useLocation();
+    let id = pathname.split('/post/')[1]
+    const pathName = pathname.replace(`${id}`, '');
+
     // const match = useMatch('/path/*');
 
     React.useEffect(() => {
@@ -174,8 +178,6 @@ function Header() {
         }
     }, [pathname])
 
-    let id = pathname.split('/post/')[1]
-    const pathName = pathname.replace(`${id}`, '');
 
 
 
@@ -267,6 +269,7 @@ function Header() {
                             </h2>
                         </Link>
                     </Navbar.Brand>
+                    
                     <NavDropdown
                     title="Меню" id="basic-nav-dropdown">
                     <NavDropdown.Item
@@ -355,7 +358,7 @@ function Header() {
                         {isAuth ? <Nav.Link active={pathname === '/newpost'} to='/newpost' as={Link}>Создать</Nav.Link> :
                         <Nav.Link disabled active={pathname === '/newpost'} to='/newpost' as={Link}>Создать</Nav.Link>}
                     </Nav> : null}
-
+                    
                 </div>
             </div>
         </div>

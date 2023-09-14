@@ -19,11 +19,15 @@ import 'react-toastify/dist/ReactToastify.css';
 import {db} from './firebase'
 import { collection, onSnapshot, doc, deleteDoc, orderBy, query, getDocs, startAfter, limit, endBefore, limitToLast } from 'firebase/firestore'
 import {ref, deleteObject, getStorage} from 'firebase/storage'
+import SearchForm from './components/SearchForm';
 
 function App() {
 
       const [products, setProducts] = useState([]);
       const [posts, setPosts] = useState([])
+      const [allPosts, setAllPosts] = useState([])
+
+      const [searchPost, setSearchPost] = useState(posts);
 
       const [loading, setLoading] = useState(false);
       const [q, setQ] = useState();
@@ -41,12 +45,39 @@ function App() {
       const [notifyR, setNotifyRef] = useState(false);
 
       let location = useLocation();
+      console.log('searchPost:', searchPost)
+
+      // const searchRef = React.useRef(searchPost);
+      // React.useEffect(() => {
+      //     searchRef.current = searchPost;
+      // }, [searchPost])
+
+      // useEffect(() => {
+      //   if(searchPost.length !== 0) {
+      //     setPosts(searchPost)
+      //   } 
+      // }, [searchPost])
+    
 
       // количество загружаемых элементов
       let pageSize = 6;
       
       const postsRef = collection(db, 'posts')
       // const first = query(recipesCollectionRef, orderBy('created_at', 'desc'), limit(9))
+
+
+      // async function allData() {
+      //   const qr = query(postsRef, orderBy('created_at', 'desc'));
+      //   const resp = await getDocs(qr);
+      //   const allData = resp.docs.map(data => {return {id: doc.id, viewing: false, ...data.data()}})
+      //   setAllPosts(allData);
+      //   console.log('allData', allData)
+      // }
+      
+
+      // useEffect(() => {
+      //   allData()
+      // }, [])
 
       // значение при загрузке страницы - нескоьлко элементов равных limit(number)
       async function fetchData() {
@@ -196,10 +227,15 @@ function App() {
         
       };
 
+      useEffect(() => {
+        
+   
+      }, [])
+
       // useEffect(() => {
-      //     onSnapshot(q, snapshot => {
+      //     onSnapshot(qr, snapshot => {
       //     setLoading(true);
-      //     setPosts(snapshot.docs.map(doc => {
+      //     setAllPosts(snapshot.docs.map(doc => {
       //       return {
       //         id: doc.id,
       //         viewing: false,
@@ -209,14 +245,17 @@ function App() {
       // })
       // }, [])
 
+      // console.log(allPosts)
 
     return (
-        <AppContext.Provider value={{posts, removePost, loading, setLoading, products, setProducts, qLast, fetchData, fetchNextData, fetchPrevData, pageSize, fetching, setFetching, loadingNew, setNoty, notifyR, setNotifyRef, notytwo, setNotyTwo, notyDelete, notyCreate, setNotyCreate, setNotyDelete, notyUserAuth, setNotyUserAuth}} >
+        <AppContext.Provider value={{posts, setPosts, removePost, loading, setLoading, products, setProducts, qLast, fetchData, fetchNextData, fetchPrevData, pageSize, fetching, setFetching, loadingNew, setNoty, notifyR, setNotifyRef, notytwo, setNotyTwo, notyDelete, notyCreate, setNotyCreate, setNotyDelete, notyUserAuth, setNotyUserAuth, searchPost, setSearchPost}} >
 
         <div className='d-flex flex-column min-vh-100'>
 
             <Header />
-           
+        
+            <SearchForm />
+      
         <div className='container'>
        
           <Routes>
