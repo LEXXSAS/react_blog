@@ -132,7 +132,7 @@ return  (
     {!loading ? 
     <Row xs={1} md={2} className="g-4">
     {mySkeletonCount.map(mySkelItem => 
-    <MYSkeleton key={mySkelItem.id} />
+    <MYSkeleton key={mySkelItem} />
     )}
     </Row>
     : 

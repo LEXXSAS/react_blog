@@ -46,7 +46,7 @@ function App() {
       const [notifyR, setNotifyRef] = useState(false);
 
       let location = useLocation();
-      console.log('searchPost:', searchPost)
+      // console.log('searchPost:', searchPost)
 
       // const searchRef = React.useRef(searchPost);
       // React.useEffect(() => {
@@ -65,7 +65,6 @@ function App() {
       
       const postsRef = collection(db, 'posts')
       // const first = query(recipesCollectionRef, orderBy('created_at', 'desc'), limit(9))
-
 
       // async function allData() {
       //   const qr = query(postsRef, orderBy('created_at', 'desc'));
@@ -96,8 +95,8 @@ function App() {
         setQTwo(lastVisible)
 
         console.log('first docs map data', firstVisible);
-        console.log("last docs id", lastVisible);
         console.log('posts', firstVisible)
+        // console.log("last docs id", lastVisible);
       }
 
       // следующее значение
@@ -114,7 +113,7 @@ function App() {
   
           const nextVisible = responseNext.docs.map(data => {return data.data()});
           setQLast(nextVisible);
-          console.log("next nextVisible docs map", nextVisible);
+          console.log("fetchNextData nextVisible docs map", nextVisible);
           console.log('New data is loading')
   
           const newLastVisible = responseNext.docs[responseNext.docs.length - 1];
@@ -165,7 +164,7 @@ function App() {
         fetchData();
         setFetching(false)
       }, [])
-
+// scroll download nextData
       useEffect(() => {
         window.addEventListener('scroll', scrollHandler);
         return () => {
@@ -185,9 +184,15 @@ function App() {
       }
 
       useEffect(() => {
-        if (fetching && (location.pathname === '/')) {
+        if (fetching && (location.pathname === '/') && search === '') {
+          setFetching(true)
           fetchNextData()
+        } else {
+          setFetching(false)
         }
+        // return () => {
+        //   setFetching(false)
+        // }
       }, [fetching])
 
      const storage = getStorage();
@@ -227,11 +232,6 @@ function App() {
         });
         
       };
-
-      useEffect(() => {
-        
-   
-      }, [])
 
       // useEffect(() => {
       //     onSnapshot(qr, snapshot => {
