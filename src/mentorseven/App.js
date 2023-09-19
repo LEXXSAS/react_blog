@@ -17,15 +17,17 @@ import Updatepost from './pages/Updatepost';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'react-toastify/dist/ReactToastify.css';
 import {db} from './firebase'
-import { collection, onSnapshot, doc, deleteDoc, orderBy, query, getDocs, startAfter, limit, endBefore, limitToLast } from 'firebase/firestore'
+import { collection, onSnapshot, doc, deleteDoc, orderBy, query, getDocs, startAfter, limit, endBefore, limitToLast, getCountFromServer } from 'firebase/firestore'
 import {ref, deleteObject, getStorage} from 'firebase/storage'
 import SearchForm from './components/SearchForm';
-
+import Pagination from './components/Pagination';
+import { off, get } from "firebase/database";
 function App() {
 
       const [products, setProducts] = useState([]);
       const [posts, setPosts] = useState([])
       const [allPosts, setAllPosts] = useState([])
+      // const [totalItems, setTotalItems] = useState([])
 
       const [searchPost, setSearchPost] = useState(posts);
       const [search, setSearch] = useState('');
@@ -45,7 +47,14 @@ function App() {
 
       const [notifyR, setNotifyRef] = useState(false);
 
+      const [selectedItem, setSelectedItem] = useState(null);
+      const [itemOffset, setItemOffset] = useState(0);
+      const [currentPage, setCurrentPage] = useState(1);
+      const [itemsPerPage, setItemsPerPage] = useState(6);
+      const [totalItems, setTotalItems] = useState(0);
+
       let location = useLocation();
+
       // console.log('searchPost:', searchPost)
 
       // const searchRef = React.useRef(searchPost);
@@ -81,8 +90,10 @@ function App() {
 
       // значение при загрузке страницы - нескоьлко элементов равных limit(number)
       async function fetchData() {
-
-        const first = query(postsRef, orderBy('created_at', 'desc'), limit(pageSize));
+        await getTotalCount();
+        const startIndex = (currentPage - 1) * itemsPerPage;
+        const first = query(postsRef, orderBy('created_at', 'desc'), limit(startIndex + itemsPerPage));
+        // const first = query(postsRef, orderBy('created_at', 'desc'), limit(pageSize));
         const response = await getDocs(first);
         setLoading(true);
         
@@ -163,7 +174,7 @@ function App() {
       useEffect(() => {
         fetchData();
         setFetching(false)
-      }, [])
+      }, [currentPage])
 // scroll download nextData
       useEffect(() => {
         window.addEventListener('scroll', scrollHandler);
@@ -230,10 +241,26 @@ function App() {
         
       };
 
+      const qr = query(postsRef, orderBy('created_at', 'desc'));
+
+      // useEffect(() => {
+        async function getTotalCount() {
+          const snapshot = await getCountFromServer(qr);
+          const res = snapshot.data().count;
+          setTotalItems(res) 
+        }
+        
+      // }, [])
+
+        useEffect(() => {
+          getTotalCount()
+        }, [])
+
       // useEffect(() => {
       //     onSnapshot(qr, snapshot => {
       //     setLoading(true);
       //     setAllPosts(snapshot.docs.map(doc => {
+      //       setTotalItems(allPosts.length)
       //       return {
       //         id: doc.id,
       //         viewing: false,
@@ -241,17 +268,25 @@ function App() {
       //       }
       //   }))
       // })
-      // }, [])
+      // }, [totalItems])
 
-      // console.log(allPosts)
+      const onPageChange =(pageNumber) => {
+        setCurrentPage(pageNumber + 1);
+      }
+
+      const onPerPageChange = (perPage) => {
+        setItemsPerPage(perPage)
+      };
 
     return (
-        <AppContext.Provider value={{posts, setPosts, removePost, loading, setLoading, products, setProducts, qLast, fetchData, fetchNextData, fetchPrevData, pageSize, fetching, setFetching, loadingNew, setNoty, notifyR, setNotifyRef, notytwo, setNotyTwo, notyDelete, notyCreate, setNotyCreate, setNotyDelete, notyUserAuth, setNotyUserAuth, searchPost, setSearchPost, search, setSearch}} >
+        <AppContext.Provider value={{posts, setPosts, removePost, loading, setLoading, products, setProducts, qLast, fetchData, fetchNextData, fetchPrevData, pageSize, fetching, setFetching, loadingNew, setNoty, notifyR, setNotifyRef, notytwo, setNotyTwo, notyDelete, notyCreate, setNotyCreate, setNotyDelete, notyUserAuth, setNotyUserAuth, searchPost, setSearchPost, search, setSearch, itemsPerPage, totalItems, onPageChange, onPerPageChange, itemOffset, setItemOffset}} >
 
         <div className='d-flex flex-column min-vh-100'>
 
             <Header />
-        
+           {/* <div className='container'>
+            <Pagination />
+            </div> */}
             <SearchForm />
       
         <div className='container'>
@@ -272,7 +307,7 @@ function App() {
           </Routes>
 
         </div>
-        
+          {/* <Pagination /> */}
            <Footer />
 
         {showButton && (

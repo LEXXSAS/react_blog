@@ -58,7 +58,7 @@ const SearchForm = () => {
           >
             <Row>
               <Col xs="auto">
-                {pathName !== '/post/' ? 
+                {pathName === '/' ? 
                 <Form.Control
                   type="text"
                   placeholder="Search"
