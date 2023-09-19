@@ -28,6 +28,7 @@ function App() {
       const [allPosts, setAllPosts] = useState([])
 
       const [searchPost, setSearchPost] = useState(posts);
+      const [search, setSearch] = useState('');
 
       const [loading, setLoading] = useState(false);
       const [q, setQ] = useState();
@@ -248,7 +249,7 @@ function App() {
       // console.log(allPosts)
 
     return (
-        <AppContext.Provider value={{posts, setPosts, removePost, loading, setLoading, products, setProducts, qLast, fetchData, fetchNextData, fetchPrevData, pageSize, fetching, setFetching, loadingNew, setNoty, notifyR, setNotifyRef, notytwo, setNotyTwo, notyDelete, notyCreate, setNotyCreate, setNotyDelete, notyUserAuth, setNotyUserAuth, searchPost, setSearchPost}} >
+        <AppContext.Provider value={{posts, setPosts, removePost, loading, setLoading, products, setProducts, qLast, fetchData, fetchNextData, fetchPrevData, pageSize, fetching, setFetching, loadingNew, setNoty, notifyR, setNotifyRef, notytwo, setNotyTwo, notyDelete, notyCreate, setNotyCreate, setNotyDelete, notyUserAuth, setNotyUserAuth, searchPost, setSearchPost, search, setSearch}} >
 
         <div className='d-flex flex-column min-vh-100'>
 

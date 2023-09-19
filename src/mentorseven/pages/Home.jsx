@@ -123,17 +123,17 @@ export const Home = () => {
     });
     const [disabled, setDisabled] = useState(false);
     // console.log(searchPost.length)
+
+    const mySkeletonCount = [1, 2, 3, 4, 5, 6];
+
 // нужно добавить рендеринг скелетонов динамически по количеству загружаемого контента за раз равному pageSize
 return  (
     <>
     {!loading ? 
     <Row xs={1} md={2} className="g-4">
-    <MYSkeleton />
-    <MYSkeleton />
-    <MYSkeleton />
-    <MYSkeleton />
-    <MYSkeleton />
-    <MYSkeleton />
+    {mySkeletonCount.map(mySkelItem => 
+    <MYSkeleton key={mySkelItem.id} />
+    )}
     </Row>
     : 
     <Row xs={1} md={2} className="g-4">

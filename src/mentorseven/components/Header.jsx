@@ -13,7 +13,7 @@ import SearchForm from './SearchForm';
 
 
 function Header() {
-    const {notytwo, setNotyTwo, notyDelete, notyCreate, setNotyDelete, setNotyCreate, notyUserAuth, setNotyUserAuth} = React.useContext(AppContext);
+    const {notytwo, setNotyTwo, notyDelete, notyCreate, setNotyDelete, setNotyCreate, notyUserAuth, setNotyUserAuth, setSearch, search} = React.useContext(AppContext);
 
     const notify = () => toast.success(`Статья добавлена`, {
         position: "top-right",
@@ -156,12 +156,8 @@ function Header() {
     //         notifyCreatePost()
     //     }
 
-
-
-    
     // const [us, setUs] = React.useState(false)
     // const {id} = useParams();
-    
 
     const [isAuth, setIsAuth] = React.useState(false);
     let {pathname} = useLocation();
@@ -177,9 +173,6 @@ function Header() {
             setIsAuth(false)
         }
     }, [pathname])
-
-
-
 
     // function handleClick() {
     // return setUs(!false)
@@ -198,7 +191,6 @@ function Header() {
     //         });
     //   }
 
-      
     //   useEffect(() => {
     //     const timer = setTimeout(() => {
     //         notifydesctop()
@@ -207,7 +199,6 @@ function Header() {
     //   }, [])
 
     return (
-
 
         <div className='header-small' style={{padding: '0 1.5rem'}}>
         {/* <ToastContainer /> */}
@@ -261,6 +252,7 @@ function Header() {
 
                     <Navbar.Brand>
                         <Link
+                        onClick={() => setSearch('')}
                         to='/'>
                             <h2>React
                             <span style={{color: '#ffaa0cbd'}}>

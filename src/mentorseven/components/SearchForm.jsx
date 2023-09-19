@@ -19,9 +19,7 @@ const filterPosts = (searchText, listOfPosts) => {
 
 
 const SearchForm = () => {
-    const {posts, setSearchPost} = React.useContext(AppContext);
-
-    const [search, setSearch] = useState('');
+    const {posts, setSearchPost, search, setSearch} = React.useContext(AppContext);
 
     const postsRef = React.useRef(posts);
 
@@ -58,6 +56,7 @@ const SearchForm = () => {
                 <Form.Control
                   type="text"
                   placeholder="Search"
+                  value={search}
                   className=" mr-sm-2"
                   onChange={(e) => setSearch(e.target.value)}
                 />
