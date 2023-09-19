@@ -190,9 +190,6 @@ function App() {
         } else {
           setFetching(false)
         }
-        // return () => {
-        //   setFetching(false)
-        // }
       }, [fetching])
 
      const storage = getStorage();

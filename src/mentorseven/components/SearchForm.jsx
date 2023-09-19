@@ -36,6 +36,12 @@ const SearchForm = () => {
         return () => clearTimeout(Debounce)
     }, [search])
 
+    useEffect(() => {
+      if (search === '') {
+        setSearchPost(posts)
+      }
+    }, [search, posts])
+
 
     let {pathname} = useLocation();
     let id = pathname.split('/post/')[1]
