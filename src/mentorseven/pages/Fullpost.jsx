@@ -10,7 +10,7 @@ import FadeIn from "react-fade-in";
 const Fullpost = () => {
   const [load, setLoad] = React.useState(false)
 
-  const {posts, allPosts} = React.useContext(AppContext)
+  const {posts, allPosts, setSearch} = React.useContext(AppContext)
 
     const navigate = useNavigate();
 
@@ -106,7 +106,7 @@ const Fullpost = () => {
               <div style={{paddingBottom: '8px'}} className='cardbtns'>
               <Link style={{padding: '0 1rem'}}
               to='/'>
-              <Button variant='primary'>
+              <Button variant='primary' onClick={() => setSearch('')}>
                 Назад
               </Button>
               </Link>
