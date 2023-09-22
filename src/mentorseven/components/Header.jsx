@@ -252,7 +252,7 @@ function Header() {
 
                     <Navbar.Brand>
                         <Link
-                        onClick={() => {setSearch('')}
+                        onClick={() => setSearch('')
                         }
                         to='/'>
                             <h2>React
