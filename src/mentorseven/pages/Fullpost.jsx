@@ -10,13 +10,14 @@ import FadeIn from "react-fade-in";
 const Fullpost = () => {
   const [load, setLoad] = React.useState(false)
 
-  const {posts} = React.useContext(AppContext)
+  const {posts, allPosts} = React.useContext(AppContext)
 
     const navigate = useNavigate();
 
     let {id} = useParams();
 
-    const post = posts.find((obj) => obj.id === (id));
+    const post = allPosts.find((obj) => obj.id === (id));
+    // const post = posts.find((obj) => obj.id === (id));
 
     // React.useEffect(() => {
     //   setTimeout(() => {

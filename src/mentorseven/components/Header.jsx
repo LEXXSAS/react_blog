@@ -252,7 +252,8 @@ function Header() {
 
                     <Navbar.Brand>
                         <Link
-                        onClick={() => setSearch('')}
+                        onClick={() => {setSearch('')}
+                        }
                         to='/'>
                             <h2>React
                             <span style={{color: '#ffaa0cbd'}}>
