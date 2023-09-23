@@ -4,13 +4,19 @@ import { AppContext } from './context';
 import { useLocation } from 'react-router-dom';
 
 const Pagination = () => {
-    const {posts, itemsPerPage, totalItems, onPageChange, onPerPageChange, itemOffset, setItemOffset, allPosts} = React.useContext(AppContext);
+    const {posts, itemsPerPage, totalItems, onPageChange, onPerPageChange, itemOffset, setItemOffset, allPosts, setItemsPerPage, fetchData, triggerVisible, setTriggerVisible} = React.useContext(AppContext);
 
     const postsRef = React.useRef(posts);
 
     React.useEffect(() => {
       postsRef.current = posts;
     }, [posts])
+
+    const newOffsetRef = React.useRef(itemOffset)
+
+    React.useEffect(() => {
+      newOffsetRef.current = itemOffset;
+    }, [itemOffset])
 
     const totalPages = Math.ceil(totalItems / itemsPerPage);
     // useEffect(() => {
@@ -25,11 +31,19 @@ const Pagination = () => {
         // console.log('currentItems', currentItems)
         setItemOffset(newOffset);
         onPageChange(Number(pageObj.selected))
-    }
-
+      }
+      
     const handlePerPageClick = (event) => {
         const {value} = event.target;
         onPerPageChange(Number(value));
+        console.log('items on page', value)
+        setItemsPerPage(Number(value))
+        if (value == totalItems) {
+          setTriggerVisible(true);
+          fetchData()
+        } else {
+          setTriggerVisible(false)
+        }
     }
 
     let {pathname} = useLocation();

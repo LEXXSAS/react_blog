@@ -21,6 +21,7 @@ import { collection, onSnapshot, doc, deleteDoc, orderBy, query, getDocs, startA
 import {ref, deleteObject, getStorage} from 'firebase/storage'
 import SearchForm from './components/SearchForm';
 import Pagination from './components/Pagination';
+import moment from 'moment'
 // import { off, get, limitToFirst } from "firebase/database";
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
       const [posts, setPosts] = useState([])
       const [allPosts, setAllPosts] = useState([])
       const [searchData, setSearchData] = useState([])
+      const [triggerVisible, setTriggerVisible] = useState(false)
       // const [totalItems, setTotalItems] = useState([])
 
       const [searchPost, setSearchPost] = useState(posts);
@@ -55,7 +57,6 @@ function App() {
       const [totalItems, setTotalItems] = useState(0);
 
       let location = useLocation();
-
       // console.log('searchPost:', searchPost)
 
       // const searchRef = React.useRef(searchPost);
@@ -95,16 +96,18 @@ function App() {
 
       // значение при загрузке страницы - нескоьлко элементов равных limit(number)
       async function fetchData() {
-       
         const startIndex = (currentPage - 1) * itemsPerPage;
+        console.log('%ccurrentPage', 'font-weight: bold', currentPage)
+        console.log('itemOffset', itemOffset)
+        const forLimitToLast = startIndex + itemsPerPage;
+        console.log('%cforLimitToLast', 'font-weight: bold', forLimitToLast)
         // const first =  query(postsRef, orderBy('created_at', 'desc'), limitToLast(totalItems));
-        if (itemOffset !== 0) {
           await getTotalCount();
-          const first = query(postsRef, orderBy('created_at', 'desc'), limitToLast(itemOffset));
+          const first = query(postsRef, orderBy('created_at'), limitToLast(forLimitToLast));
           const response = await getDocs(first);
           setLoading(true);
           
-          const firstVisible = response.docs.map(data => {return {id: doc.id, viewing: false, ...data.data()}}).slice(0, itemsPerPage)
+          const firstVisible = response.docs.map(data => {return {id: doc.id, viewing: false, ...data.data()}}).slice(0, itemsPerPage).reverse()
           setQ(firstVisible);
   
           setPosts(firstVisible)
@@ -112,24 +115,23 @@ function App() {
           const lastVisible = response.docs[response.docs.length - 1];
           setQTwo(lastVisible)
   
-          console.log('first docs map data', firstVisible);
-          console.log('posts', firstVisible)
-        } else {
-          const first = query(postsRef, orderBy('created_at', 'desc'), limit(pageSize));
-          const response = await getDocs(first);
-          setLoading(true);
+          console.log('%cfirstVisible', 'color: yellow-green', firstVisible)
+        // } else {
+        //   const first = query(postsRef, orderBy('created_at', 'desc'), limit(pageSize));
+        //   const response = await getDocs(first);
+        //   setLoading(true);
           
-          const firstVisible = response.docs.map(data => {return {id: doc.id, viewing: false, ...data.data()}}).slice(0, itemsPerPage)
-          setQ(firstVisible);
+        //   const firstVisible = response.docs.map(data => {return {id: doc.id, viewing: false, ...data.data()}}).slice(0, itemsPerPage)
+        //   setQ(firstVisible);
   
-          setPosts(firstVisible)
+        //   setPosts(firstVisible)
   
-          const lastVisible = response.docs[response.docs.length - 1];
-          setQTwo(lastVisible)
+        //   const lastVisible = response.docs[response.docs.length - 1];
+        //   setQTwo(lastVisible)
   
-          console.log('first docs map data', firstVisible);
-          console.log('posts', firstVisible)
-        }
+        //   console.log('first docs map data', firstVisible);
+        //   console.log('firstVisible else', firstVisible)
+        // }
         // const first = query(postsRef, orderBy('created_at', 'desc'), limitToLast(itemOffset || totalItems));
         // const first = query(postsRef, orderBy('created_at', 'desc'), limitToLast(startIndex + itemsPerPage || 0));
         // const first = query(postsRef, orderBy('created_at', 'desc'), limit(pageSize));
@@ -222,8 +224,8 @@ function App() {
 
       useEffect(() => {
         if (fetching && (location.pathname === '/') && search === '') {
-          setFetching(true)
-          fetchNextData()
+          // setFetching(true)
+          // fetchNextData()
         } else {
           setFetching(false)
         }
@@ -302,7 +304,7 @@ function App() {
       // console.log(allPosts)
 
       const onPageChange =(pageNumber) => {
-        setCurrentPage(pageNumber + 1);
+        setCurrentPage(pageNumber + 1); 
       }
 
       const onPerPageChange = (perPage) => {
@@ -310,7 +312,7 @@ function App() {
       };
 
     return (
-        <AppContext.Provider value={{posts, setPosts, removePost, loading, setLoading, products, setProducts, qLast, fetchData, fetchNextData, fetchPrevData, pageSize, fetching, setFetching, loadingNew, setNoty, notifyR, setNotifyRef, notytwo, setNotyTwo, notyDelete, notyCreate, setNotyCreate, setNotyDelete, notyUserAuth, setNotyUserAuth, searchPost, setSearchPost, search, setSearch, itemsPerPage, totalItems, onPageChange, onPerPageChange, itemOffset, setItemOffset, allPosts, searchData}} >
+        <AppContext.Provider value={{posts, setPosts, removePost, loading, setLoading, products, setProducts, qLast, fetchData, fetchNextData, fetchPrevData, pageSize, fetching, setFetching, loadingNew, setNoty, notifyR, setNotifyRef, notytwo, setNotyTwo, notyDelete, notyCreate, setNotyCreate, setNotyDelete, notyUserAuth, setNotyUserAuth, searchPost, setSearchPost, search, setSearch, itemsPerPage, totalItems, onPageChange, onPerPageChange, itemOffset, setItemOffset, allPosts, searchData, setItemsPerPage, triggerVisible, setTriggerVisible}} >
 
         <div className='d-flex flex-column min-vh-100'>
 
