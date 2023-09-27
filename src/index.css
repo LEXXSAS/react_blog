@@ -431,6 +431,15 @@ p.card-text {
     display: block;
     width: fit-content;
 }
+
+.photo-card__skeleton {
+    background-color: rgba(0, 0, 0, 0.2);
+    height: 205px;
+    width: 100%;
+    border-radius: 4px 4px 0 0;
+    /* margin-top: -5px; */
+}
+
 /* @media (min-width: 950px) {
     .upclick {
         right: 130px;
