@@ -14,6 +14,7 @@ import Profile from './pages/Profile';
 import Profiletest from './pages/Profiletest';
 import Newpost from './pages/Newpost';
 import Updatepost from './pages/Updatepost';
+import NewPagination from './components/NewPagination';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'react-toastify/dist/ReactToastify.css';
 import {db} from './firebase'
@@ -56,6 +57,10 @@ function App() {
       const [itemsPerPage, setItemsPerPage] = useState(6);
       const [totalItems, setTotalItems] = useState(0);
 
+      const [newLoading, setNewLoading] = useState(false);
+      const [newCurrentPage, setNewCurrentPage] = useState(1);
+      const [postsPerPage, setPostsPerPage] = useState(6);
+
       let location = useLocation();
       // console.log('searchPost:', searchPost)
 
@@ -78,20 +83,37 @@ function App() {
 
       // const first = query(recipesCollectionRef, orderBy('created_at', 'desc'), limit(9))
 
-      async function allData() {
-        const qr = query(postsRef, orderBy('created_at', 'desc'));
-        const resp = await getDocs(qr);
-        const allData = resp.docs.map(data => {return {id: doc.id, viewing: false, ...data.data()}});
+      async function oldAllData() {
+        // const qr = query(postsRef, orderBy('created_at', 'desc'));
+        // const resp = await getDocs(qr);
+        // const allData = resp.docs.map(data => {return {id: doc.id, viewing: false, ...data.data()}});
+        // setAllPosts(allData);
 
         if (search !== '') {
-          const sData = allData.filter(element => element.title.toLowerCase().includes(`${search}`))
+          const sData = allPosts.filter(element => element.title.toLowerCase().includes(`${search}`))
           setSearchData(sData)
         }
-          setAllPosts(allData);
       }
 
       useEffect(() => {
+        const allData = async() => {
+          setNewLoading(true);
+          const qr = query(postsRef, orderBy('created_at', 'desc'));
+          const resp = await getDocs(qr);
+          const allData = resp.docs.map(data => {return {id: doc.id, viewing: false, ...data.data()}});
+          setAllPosts(allData);
+          setNewLoading(false);
+        }
+        
         allData()
+      }, [])
+
+      const indexOfLastPost = currentPage *postsPerPage;
+      const indexOfFirstPost = indexOfLastPost - postsPerPage;
+      const currentPosts = allPosts.slice(indexOfFirstPost, indexOfLastPost);
+      
+      useEffect(() => {
+        oldAllData()
       }, [search])
 
       // значение при загрузке страницы - нескоьлко элементов равных limit(number)
@@ -303,6 +325,8 @@ function App() {
 
       // console.log(allPosts)
 
+      const paginate = pageNumber => setCurrentPage(pageNumber);
+
       const onPageChange =(pageNumber) => {
         setCurrentPage(pageNumber + 1); 
       }
@@ -318,9 +342,10 @@ function App() {
 
             <Header />
            <div className='container'>
-            <Pagination />
-            </div>
+            <Pagination currentPage={currentPage} />
+            <NewPagination postsPerPage={postsPerPage} totalPosts={allPosts.length} currentPage={currentPage} paginate={paginate} />
             <SearchForm />
+            </div>
       
         <div className='container'>
        

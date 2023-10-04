@@ -54,7 +54,7 @@ const SearchForm = () => {
     // }
 
     return (
-        <div className='header-small' style={{padding: '0 1.5rem'}}>
+        <div className='header-small' >
             <div className='container'>
             <div className='header header-search'>
         {/* <FadeIn> */}

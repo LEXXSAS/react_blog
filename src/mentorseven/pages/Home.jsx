@@ -14,6 +14,7 @@ import { useEffect } from 'react';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import moment from 'moment'
 import CardPost from '../components/CardPost';
+
 // import Skeleton, {SkeletonTheme} from 'react-loading-skeleton';
 // import noimage from '../img/noimage.jpg'
 // import Fakecard from '../components/Fakecard';
@@ -73,7 +74,6 @@ export const Home = () => {
     useScrollPosition("Home")
 
 
-
     // if (fetching) {
     //     console.log('fetching ...')
     // }
@@ -129,7 +129,6 @@ export const Home = () => {
 
     const mySkeletonCount = [1, 2, 3, 4, 5, 6];
 
-// нужно добавить рендеринг скелетонов динамически по количеству загружаемого контента за раз равному pageSize
 return  (
     <div>
     {!loading ? 

@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import ReactPaginate from 'react-paginate'
 import { AppContext } from './context';
 import { useLocation } from 'react-router-dom';
+import { memo } from 'react';
 
-const Pagination = () => {
-    const {posts, itemsPerPage, totalItems, onPageChange, onPerPageChange, itemOffset, setItemOffset, allPosts, setItemsPerPage, fetchData, triggerVisible, setTriggerVisible} = React.useContext(AppContext);
+const Pagination = ({currentPage}) => {
+    const {posts, itemsPerPage, totalItems, onPageChange, onPerPageChange, itemOffset, setItemOffset, setItemsPerPage, fetchData, setTriggerVisible} = React.useContext(AppContext);
 
     const postsRef = React.useRef(posts);
 
@@ -19,16 +20,9 @@ const Pagination = () => {
     }, [itemOffset])
 
     const totalPages = Math.ceil(totalItems / itemsPerPage);
-    // useEffect(() => {
-    //     const endOffset = itemOffset + itemsPerPage
-    //     console.log(endOffset)
-    // }, [itemOffset])
 
     const handlePageClick = (pageObj) => {
         const newOffset = (Number(pageObj.selected * itemsPerPage) % totalItems);
-        // const endOffset = itemOffset + itemsPerPage;
-        // const currentItems = posts.slice(itemOffset, endOffset)
-        // console.log('currentItems', currentItems)
         setItemOffset(newOffset);
         onPageChange(Number(pageObj.selected))
       }
@@ -54,7 +48,7 @@ const Pagination = () => {
     <>
     {pathName === '/' ? 
     <div className='row pagination-count'>
-        <div className="col-md-2">
+        {/* <div className="col-md-2">
             <select 
             className="form-select"
             aria-label="Default select"
@@ -63,7 +57,6 @@ const Pagination = () => {
             >
             <option value={6}>6</option>
             <option value={totalItems}>Все</option>
-            {/* <option value={12}>12</option> */}
             </select> 
         </div>
         <div
@@ -79,8 +72,8 @@ const Pagination = () => {
         }}
         >
         Всего: {totalItems}
-        </span>
-        <ReactPaginate 
+        </span> */}
+        {/* <ReactPaginate 
         nextLabel=" >"
         onPageChange={handlePageClick}
         pageRangeDisplayed={3}
@@ -98,9 +91,10 @@ const Pagination = () => {
         containerClassName='pagination'
         activeClassName='active'
         renderOnZeroPageCount={null}
-        />
+        forcePage={currentPage - 1}
+        /> */}
         </div>
-    </div> : ''}
+   : ''}
     </>
   )
 }
