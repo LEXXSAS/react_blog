@@ -48,6 +48,16 @@ const Pagination = ({currentPage}) => {
     <>
     {pathName === '/' ? 
     <div className='row pagination-count'>
+        <span
+        className='text-muted'
+        style={{
+            marginRight: 30,
+            display: 'flex',
+            alignItems: 'center',
+        }}
+        >
+        Всего: {totalItems}
+        </span>
         {/* <div className="col-md-2">
             <select 
             className="form-select"

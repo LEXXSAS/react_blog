@@ -323,7 +323,7 @@ function App() {
       // })
       // }, [totalItems])
 
-      console.log(allPosts)
+      // console.log(allPosts)
 
       const paginate = pageNumber => setCurrentPage(pageNumber);
 
@@ -343,7 +343,7 @@ function App() {
             <Header />
            <div className='container'>
             <Pagination currentPage={currentPage} />
-            <NewPagination postsPerPage={postsPerPage} totalPosts={allPosts.length} currentPage={currentPage} paginate={paginate} />
+            {/* <NewPagination postsPerPage={postsPerPage} totalPosts={allPosts.length} currentPage={currentPage} paginate={paginate} /> */}
             <SearchForm />
             </div>
       
