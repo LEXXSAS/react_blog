@@ -73,7 +73,7 @@ const Pagination = ({currentPage}) => {
         >
         Всего: {totalItems}
         </span> */}
-        {/* <ReactPaginate 
+        <ReactPaginate 
         nextLabel=" >"
         onPageChange={handlePageClick}
         pageRangeDisplayed={3}
@@ -92,7 +92,7 @@ const Pagination = ({currentPage}) => {
         activeClassName='active'
         renderOnZeroPageCount={null}
         forcePage={currentPage - 1}
-        /> */}
+        />
         </div>
    : ''}
     </>
