@@ -48,28 +48,7 @@ const Pagination = ({currentPage}) => {
     <>
     {pathName === '/' ? 
     <div className='row pagination-count'>
-        <span
-        className='text-muted'
-        style={{
-            marginRight: 30,
-            display: 'flex',
-            alignItems: 'center',
-        }}
-        >
-        Всего: {totalItems}
-        </span>
-        {/* <div className="col-md-2">
-            <select 
-            className="form-select"
-            aria-label="Default select"
-            value={itemsPerPage}
-            onChange={handlePerPageClick}
-            >
-            <option value={6}>6</option>
-            <option value={totalItems}>Все</option>
-            </select> 
-        </div>
-        <div
+              {/* <div
         className='col-md-10'
         style={{display: 'flex', justifyContent: 'end'}}
         >
@@ -82,7 +61,37 @@ const Pagination = ({currentPage}) => {
         }}
         >
         Всего: {totalItems}
-        </span> */}
+        </span>
+        </div> */}
+        {/* <div className="col-md-2"> */}
+            {/* <select 
+            className="form-select"
+            aria-label="Default select"
+            value={itemsPerPage}
+            onChange={handlePerPageClick}
+            >
+            <option value={6}>6</option>
+            <option value={totalItems}>Все</option>
+            </select> 
+        </div>
+        <div
+        className='col-md-10'
+        style={{display: 'flex', justifyContent: 'end'}}
+        > */}
+                <div
+        className='col-md-10'
+        style={{display: 'flex', justifyContent: 'end'}}
+        > 
+        <span
+        className='text-muted'
+        style={{
+            marginRight: 30,
+            display: 'flex',
+            alignItems: 'center',
+        }}
+        >
+        Всего: {totalItems}
+        </span>
         <ReactPaginate 
         nextLabel=" >"
         onPageChange={handlePageClick}
@@ -103,6 +112,7 @@ const Pagination = ({currentPage}) => {
         renderOnZeroPageCount={null}
         forcePage={currentPage - 1}
         />
+        </div>
         </div>
    : ''}
     </>
