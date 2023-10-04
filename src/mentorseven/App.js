@@ -323,7 +323,7 @@ function App() {
       // })
       // }, [totalItems])
 
-      // console.log(allPosts)
+      console.log(allPosts)
 
       const paginate = pageNumber => setCurrentPage(pageNumber);
 
