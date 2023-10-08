@@ -11,9 +11,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import { AppContext } from '../components/context';
 import SearchForm from './SearchForm';
 
-
 function Header() {
-    const {notytwo, setNotyTwo, notyDelete, notyCreate, setNotyDelete, setNotyCreate, notyUserAuth, setNotyUserAuth, setSearch, search} = React.useContext(AppContext);
+    const {notytwo, setNotyTwo, notyDelete, notyCreate, setNotyDelete, setNotyCreate, notyUserAuth, setNotyUserAuth, setSearch, search, firstPageFunc} = React.useContext(AppContext);
 
     const notify = () => toast.success(`Статья добавлена`, {
         position: "top-right",
@@ -252,7 +251,7 @@ function Header() {
 
                     <Navbar.Brand>
                         <Link
-                        onClick={() => setSearch('')
+                        onClick={function() {setSearch(''); firstPageFunc();}
                         }
                         to='/'>
                             <h2>React

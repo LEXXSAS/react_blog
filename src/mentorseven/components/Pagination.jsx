@@ -2,7 +2,6 @@ import React from 'react';
 import ReactPaginate from 'react-paginate'
 import { AppContext } from './context';
 import { useLocation } from 'react-router-dom';
-import { memo } from 'react';
 
 const Pagination = ({currentPage}) => {
     const {posts, itemsPerPage, totalItems, onPageChange, onPerPageChange, itemOffset, setItemOffset, setItemsPerPage, fetchData, setTriggerVisible} = React.useContext(AppContext);
@@ -27,18 +26,18 @@ const Pagination = ({currentPage}) => {
         onPageChange(Number(pageObj.selected))
       }
       
-    const handlePerPageClick = (event) => {
-        const {value} = event.target;
-        onPerPageChange(Number(value));
-        console.log('items on page', value)
-        setItemsPerPage(Number(value))
-        if (value == totalItems) {
-          setTriggerVisible(true);
-          fetchData()
-        } else {
-          setTriggerVisible(false)
-        }
-    }
+    // const handlePerPageClick = (event) => {
+    //     const {value} = event.target;
+    //     onPerPageChange(Number(value));
+    //     console.log('items on page', value)
+    //     setItemsPerPage(Number(value))
+    //     if (value == totalItems) {
+    //       setTriggerVisible(true);
+    //       fetchData()
+    //     } else {
+    //       setTriggerVisible(false)
+    //     }
+    // }
 
     let {pathname} = useLocation();
     let id = pathname.split('/post/')[1]

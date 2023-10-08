@@ -325,6 +325,19 @@ function App() {
 
       // console.log(allPosts)
 
+      let {pathname} = useLocation();
+      let id = pathname.split('/post/')[1]
+      const pathName = pathname.replace(`${id}`, '');
+
+      const firstPageFunc = () => {
+        if (pathName === '/') {
+          setCurrentPage(1)
+          if (currentPage === 1) {
+            fetchData()
+          }
+        }
+      }
+
       const paginate = pageNumber => setCurrentPage(pageNumber);
 
       const onPageChange =(pageNumber) => {
@@ -336,7 +349,7 @@ function App() {
       };
 
     return (
-        <AppContext.Provider value={{posts, setPosts, removePost, loading, setLoading, products, setProducts, qLast, fetchData, fetchNextData, fetchPrevData, pageSize, fetching, setFetching, loadingNew, setNoty, notifyR, setNotifyRef, notytwo, setNotyTwo, notyDelete, notyCreate, setNotyCreate, setNotyDelete, notyUserAuth, setNotyUserAuth, searchPost, setSearchPost, search, setSearch, itemsPerPage, totalItems, onPageChange, onPerPageChange, itemOffset, setItemOffset, allPosts, searchData, setItemsPerPage, triggerVisible, setTriggerVisible}} >
+        <AppContext.Provider value={{posts, setPosts, removePost, loading, setLoading, products, setProducts, qLast, fetchData, fetchNextData, fetchPrevData, pageSize, fetching, setFetching, loadingNew, setNoty, notifyR, setNotifyRef, notytwo, setNotyTwo, notyDelete, notyCreate, setNotyCreate, setNotyDelete, notyUserAuth, setNotyUserAuth, searchPost, setSearchPost, search, setSearch, itemsPerPage, totalItems, onPageChange, onPerPageChange, itemOffset, setItemOffset, allPosts, searchData, setItemsPerPage, triggerVisible, setTriggerVisible, firstPageFunc}} >
 
         <div className='d-flex flex-column min-vh-100'>
 
